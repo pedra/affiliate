@@ -6,9 +6,12 @@ include_once __DIR__ . "/inc/start.php";
 (new Lib\Router())
 	// Page
 	->get('/', '\Module\Page', 'home')
-	// ->get('/join', '\Module\Page', 'join')
 	->get('/profile', '\Module\Page', 'profile')
-	->post('/profile', '\Module\Page', 'userData')
+
+	// APIs
+	->get('/a/country/(.*)', '\Module\Page\Join', 'searchCountry')
+	->post('/profile', '\Module\User', 'getUserByLink')
+
 
 
 	
@@ -16,5 +19,5 @@ include_once __DIR__ . "/inc/start.php";
 	->post('/login', '\Module\Auth', 'login')
 	->post('/logout', '\Module\Auth', 'logout')
 	
-	->get('/(.*)', '\Module\Page', 'join')
+	->get('/(.*)', '\Module\Page\Join', 'index')
 	->run();

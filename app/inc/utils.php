@@ -20,15 +20,6 @@ function static_content ()
 	// Loading assets ... (e.g. css/style.css)
 	if (in_array($uri[0], explode(',', ENV['ASSETS'])))
 	download(PATH_PUBLIC . '/' . $path, false);
-
-	// Loading PAGE...
-	// $pages = explode(',', ENV['PAGES']);
-	// foreach ($pages as $page) {
-	// 	if ($path === $page) {
-	// 		include_once PATH_PUBLIC . '/' . $path . '/index.html';
-	// 		exit;
-	// 	}
-	// }
 }
 
 function download($file, $download = true)
@@ -104,6 +95,12 @@ function secured_decrypt($input)
 function goToHome()
 {
 	header('Location: /');
+	exit();
+}
+
+function goTo404() {
+	header('HTTP/1.1 404 Not Found');
+	header('Status: 404 Not Found');
 	exit();
 }
 

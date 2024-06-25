@@ -8,6 +8,8 @@ export default class JoinClass {
 	eAvatar: HTMLImageElement | null = null
 	eProjects: [HTMLSpanElement] | null = null
 
+	eFormCountry: HTMLInputElement | null = null
+
 	user = []
 	state = {
 		on: { title: 'I want' },
@@ -19,12 +21,17 @@ export default class JoinClass {
 		this.eName = __('#aft-name')
 		this.eAvatar = __('#aft-avatar')
 		this.eProjects = __('.selector span', true)
+
+		this.eFormCountry = __('#form-country')
 	}
 
 	async init() {
-		this.eProjects?.forEach((a: any) => a.onclick =	(e: any) => __toggleStatus(e, this.state))
+		this.eProjects?.forEach((a: any) => __e((e: any) => __toggleStatus(e, this.state), a))
+		__e((e: any) => this.setCountry(e), this.eFormCountry, 'keyup')
 		
 		const frm = new FormData()
+
+		try{
 		//@ts-ignore
 		frm.append('link', this.eLink.value)
 
@@ -45,6 +52,18 @@ export default class JoinClass {
 		}
 
 		return location.href = '/'
+
+		}catch(e){ console.error(e) }
+	}
+
+	async setCountry(e: any) {
+		const f = await fetch('http://localhost/a/country/br')
+		const j = await f.json()
+
+		console.log('Country:', j)
+		if(!j.data || j.data.length == 0) return false
+
+		console.log('Country:', j.data)		
 	}
 
 

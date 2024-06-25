@@ -14,7 +14,7 @@ class Auth {
 
 	public function check ()
 	{
-		if (!isset($_SESSION['user'])) goToHome();
+		if (!isset($_SESSION['user'])) goTo404();
 
 		$id = 0 + $_SESSION['user'];
 
@@ -22,7 +22,7 @@ class Auth {
 			" select id from user where id = :id",
 			[":id" => $id]
 		);
-		if (!isset($res[0])) goToHome();
+		if (!isset($res[0])) goTo404();
 
 		return $id;
 	}
