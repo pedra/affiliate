@@ -1,0 +1,189 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "@styles/join.css";
+---
+
+<Layout title="Join FreedomeE">
+  <main>
+    <div class="container">
+      <div class="profile" id="profile">
+        <div class="info">
+          <div class="avatar" id="avatar">
+            <img id="aft-avatar" src="/img/logo.png" alt="user photo" />
+          </div>
+          <h1 id="aft-name">Ashley Elizabeth Johnson</h1>
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+          excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+          laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+          eveniet nesciunt.
+        </p>
+      </div>
+
+      <div class="projects" id="projects">
+        <div class="card-project" id="card-project-1">
+          <div class="title">
+            <h2>Around</h2>
+            <div class="selector">
+              <div>I want</div>
+              <span class="material-symbols-outlined disabled">toggle_on</span>
+            </div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+            excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+            laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+            eveniet nesciunt.
+          </p>
+        </div>
+
+        <div class="card-project" id="card-project-2">
+          <div class="title">
+            <h2>Events</h2>
+            <div class="selector">
+              <div>I want</div>
+              <span class="material-symbols-outlined">toggle_on</span>
+            </div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+            excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+            laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+            eveniet nesciunt.
+          </p>
+        </div>
+
+        <div class="card-project" id="card-project-3">
+          <div class="title">
+            <h2>Store</h2>
+            <div class="selector">
+              <div>I want</div>
+              <span class="material-symbols-outlined">toggle_on</span>
+            </div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+            excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+            laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+            eveniet nesciunt.
+          </p>
+        </div>
+
+        <div class="card-project" id="card-project-4">
+          <div class="title">
+            <h2>Learning</h2>
+            <div class="selector">
+              <div>I want</div>
+              <span class="material-symbols-outlined">toggle_on</span>
+            </div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+            excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+            laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+            eveniet nesciunt.
+          </p>
+        </div>
+
+        <div class="card-project" id="card-project-5">
+          <div class="title">
+            <h2>Streaming</h2>
+            <div class="selector">
+              <div>I want</div>
+              <span class="material-symbols-outlined">toggle_on</span>
+            </div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+            excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+            laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+            eveniet nesciunt.
+          </p>
+        </div>
+      </div>
+
+      <div class="form">
+        <div class="frm-input">
+          <div class="left">
+            <div class="form-input">
+              <label for="form-name">Name</label>
+              <input type="text" id="form-name" placeholder="Your name..." />
+            </div>
+
+            <div class="form-input">
+              <label for="form-email">E-mail</label>
+              <input
+                type="email"
+                id="form-email"
+                placeholder="Your e-mail address..."
+              />
+            </div>
+
+            <div class="form-input">
+              <label for="form-password">Password</label>
+              <input
+                type="password"
+                id="form-password"
+                placeholder="Your password..."
+              />
+            </div>
+
+            <div class="form-input">
+              <label for="form-cpassword">Confirm password</label>
+              <input
+                type="password"
+                id="form-cpassword"
+                placeholder="Confirme your password..."
+              />
+            </div>
+          </div>
+
+          <div class="right">
+            <div class="form-input">
+              <label for="form-country">Country</label>
+              <input
+                type="text"
+                id="form-country"
+                placeholder="Your Country..."
+              />
+            </div>
+
+            <div class="form-input">
+              <label for="form-phone">Phone</label>
+              <input
+                type="tel"
+                id="form-phone"
+                placeholder="Your phone number..."
+              />
+            </div>
+
+            <div class="form-input">
+              <label for="form-conpany">Company</label>
+              <input
+                type="text"
+                id="form-conpany"
+                placeholder="Your company..."
+              />
+            </div>
+			<div style="background:#ff0;padding:1rem">TODO: Usar Grid Area em diferentes tamanhos de tela</div>
+          </div>
+        </div>
+
+        <div class="control">
+          <span
+            >Discover <a href="https://freedomee.network">FreedomeE.network</a> now!</span
+          >
+          <button id="form-submit">Create</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://freedomee.network"
+      ><img src="/img/logo.png" alt="logo" /></a
+    >
+    <div>© 2024 All rights reserved</div>
+  </footer>
+</Layout>

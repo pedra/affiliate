@@ -1,0 +1,189 @@
+
+body {
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    justify-content: flex-start;
+
+	font-weight: 500;
+	overflow: auto;
+}
+
+/* HEADER
+----------------------------------------------------------------------------- */
+header {
+	width: 100%;
+	background: #def;
+	box-shadow: 0 3px 30px rgba(0,0,0,0.2);
+}
+
+header .container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 600px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 1rem;
+}
+
+header .user {
+    display: flex;
+    gap: 1rem;
+}
+
+header .user .avatar {
+	margin: 0 auto;
+	min-width: 100px;
+	max-width: 140px;
+}
+
+header .user .avatar img {
+	width: 100%;
+	border-radius: 50%;
+	aspect-ratio: 1 / 1;
+}
+
+header .user h1 {
+	font-size: 2rem;
+	font-weight: 300;
+}
+
+header .user p {
+	margin: 1rem 0 0 0;
+}
+
+/* MAIN
+----------------------------------------------------------------------------- */
+main {
+	display: flex;
+	padding: 1rem;
+	position: relative;
+	z-index: 100;
+	flex: 1;
+}
+
+main .container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 600px;
+
+	border-radius: var(--radius-1);
+}
+
+/* PROFILE
+----------------------------------------------------------------------------- */
+.profile .info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+}
+
+.profile .avatar {}
+.profile .avatar img {}
+
+.profile h1 {
+	font-size: 3rem;
+}
+
+
+/* PROJECTS
+------------------------------------------------------------------------------*/
+.projects {
+
+}
+
+.card-project {
+	padding: 1rem;
+	margin: 1rem 0;
+	background: var(--white);
+	box-shadow: 0 2px 14px rgba(0,0,0,0.3);
+	border-radius: var(--radius-1);
+}
+
+.card-project .title {
+	display: flex;
+	align-items: center;
+    justify-content: space-between;
+	margin-top: -0.5rem;
+}
+
+.card-project h2 {
+	font-size: 1rem;
+	font-weight: 700;
+	color: green;
+}
+
+.card-project .selector  {
+	display: flex;
+	align-items: center;
+}
+
+.card-project p {
+	font-weight: 400;
+	/* font-size: 1rem; */
+}
+
+.card-project .selector span {
+	font-size: 2rem;
+	margin: 0 0 0 1rem;
+	color: green;
+	cursor: pointer;
+}
+
+.card-project .selector span.off {
+	color: red;
+	opacity: 0.6;
+}
+
+.card-project span.disabled {
+	color: #ccc;
+	cursor: not-allowed;
+}
+
+/* FORM
+------------------------------------------------------------------------------*/
+.form .frm-input {
+	display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1rem;
+}
+
+.form .left,
+.form .right {
+	width: 100%;
+}
+.control {
+    margin: 2rem 0;
+    display: flex;
+	flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.control span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control img {
+    height: 3rem;
+}
+
+.control button {
+	min-width: 200px;
+}
+
+/* FOOTER
+----------------------------------------------------------------------------- */
+footer {
+    display: flex;
+    align-items: center;
+    background: #def;
+    width: 100%;
+    justify-content: center;
+}

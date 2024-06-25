@@ -1,0 +1,177 @@
+
+body {
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    justify-content: flex-start;
+
+	font-weight: 500;
+	overflow: auto;
+}
+
+/* HEADER
+----------------------------------------------------------------------------- */
+header {
+	width: 100%;
+	background: #def;
+	box-shadow: 0 3px 30px rgba(0,0,0,0.2);
+}
+
+header .container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 600px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 1rem;
+}
+
+header .user {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+header .user h1 {
+	font-size: 1.6rem;
+	font-weight: 700;
+	text-align: start;	
+	flex-wrap: wrap;
+}
+
+header .user img {
+	width: 32px;
+	border-radius: 50%;
+	aspect-ratio: 1/1;
+}
+
+header .menu {
+	opacity: 0.3;
+}
+
+/* MAIN
+----------------------------------------------------------------------------- */
+main {
+	display: flex;
+	padding: 1rem;
+	position: relative;
+	z-index: 100;
+	flex: 1;
+	width: 100%;
+}
+
+main .container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 600px;
+	border-radius: var(--radius-1);
+}
+
+/* AFFILIATES CARDS
+------------------------------------------------------------------------------*/
+.pro-card {
+	padding: 1rem;
+	margin: 1rem 0;
+	background: var(--white);
+	box-shadow: 0 2px 14px rgba(0,0,0,0.3);
+	border-radius: var(--radius-1);
+}
+
+.pro-card label {
+	padding: 0;
+	margin: 0 0.3rem 0 0;
+	font-weight: 300;
+	font-size: 1rem;
+	display: inline-block;
+}
+
+.pro-card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-weight: 700;
+}
+
+.pro-card-header h2 {
+	font-size: 1.2rem;
+}
+
+.pro-card-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    font-weight: 700;
+	padding: 0.2rem 0;
+}
+
+.pro-card-content .div {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 1rem;
+}
+
+.pro-card-content .div div {
+	padding: 0.2rem 0;
+    display: flex;
+	gap: 1rem;
+	min-width: calc(50% - 0.5rem);
+}
+
+.pro-card .project {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3rem;
+	padding: 0.5rem 0;
+}
+
+.pro-card .project span {
+	background: #def;
+	padding: 2px 0.5rem;
+	border-radius: var(--radius-2);
+
+	background: #479;
+	color: #fff;
+}
+
+/* CONTROL */
+.pro-card .control {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	background: #def;
+	color: #999;
+	margin: 0.5rem -1rem -1rem -1rem;
+	padding: 0 1rem;
+}
+
+.pro-card .control span {
+	font-size: 2rem;
+	margin: 0 0 0 1rem;
+	color: green;
+	cursor: pointer;
+}
+
+.pro-card .control span.off {
+	color: red;
+	opacity: 0.6;
+}
+
+.pro-card .control span.disabled {
+	color: #ccc;
+	cursor:not-allowed
+}
+
+/* FOOTER
+----------------------------------------------------------------------------- */
+footer {
+	background: #def;
+    width: 100%;
+}
+
+footer .container {
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+	padding: 0 1rem;
+}
