@@ -46,4 +46,16 @@ class Join {
 		return false;
 	}
 
+	public function countries () {
+		$sql =
+		"select id, name, iso3, phonecode, native
+			from country
+			order by name asc";
+
+		$res = $this->db->query($sql);
+
+		if($res[0]) return $res;
+		return false;
+	}
+
 }

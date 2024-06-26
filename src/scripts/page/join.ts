@@ -2,68 +2,159 @@ import { __, __e, __c, __delay, __report, __toggleStatus } from "@scripts/utils"
 
 export default class JoinClass {
 
-	eLink:  HTMLInputElement | null = null
+	eLink: HTMLInputElement | null = null
 
 	eName: HTMLHeadElement | null = null
 	eAvatar: HTMLImageElement | null = null
 	eProjects: [HTMLSpanElement] | null = null
 
 	eFormCountry: HTMLInputElement | null = null
+	eSubmit: HTMLButtonElement | null = null
 
 	user = []
 	state = {
 		on: { title: 'I want' },
 		off: { title: 'No thanks' }
 	}
+	countries = []
 
-	constructor(){
+	constructor() {
+		this.getCountries()
 		this.eLink = __('#aft-link')
 		this.eName = __('#aft-name')
 		this.eAvatar = __('#aft-avatar')
 		this.eProjects = __('.selector span', true)
 
 		this.eFormCountry = __('#form-country')
+		this.eSubmit = __('#form-submit')
 	}
 
 	async init() {
 		this.eProjects?.forEach((a: any) => __e((e: any) => __toggleStatus(e, this.state), a))
-		__e((e: any) => this.setCountry(e), this.eFormCountry, 'keyup')
-		
-		const frm = new FormData()
-
-		try{
-		//@ts-ignore
-		frm.append('link', this.eLink.value)
-
-		const f = await fetch('/profile', {
-			method: 'POST',
-			body: frm
-		})
-
-		console.log('RES', f)
-
-		const res = await f.json()
-		if (res && res.data) {
-			console.log("Res:", res.data)
-			// @ts-ignore
-			this.eName.innerText = res.data.name
-			this.eAvatar?.setAttribute('src', `/img/u/${res.data.id}.jpg`) 
-			return
-		}
-
-		return location.href = '/'
-
-		}catch(e){ console.error(e) }
+		this.observeCountry()
+		__e(()=>this.submit(), this.eSubmit)
 	}
 
-	async setCountry(e: any) {
-		const f = await fetch('http://localhost/a/country/br')
+	async submit() {
+		const data = this.validate()
+		console.log('Submit Validade', data )
+		if (data == false) return false
+
+		this.eProjects?.forEach((a: any) => { if(a.dataset.status == '1') data.projects.push(a.dataset.name) })
+		console.log('Data in Submit', data)
+		data.projects = data.projects.join(',')
+		
+		if (data.projects.length == 0 || data.projects.indexOf('around') == -1) 
+			return __report('Please select at least one project')
+		
+		const frm = new FormData()
+		for(let i in data){
+			frm.append(i, data[i])
+		}
+
+		const f = await fetch('http://localhost/a/submit', { method: 'POST', body: frm })
 		const j = await f.json()
+		if(j && j.error === false && j.data && j.data.error === false){
 
-		console.log('Country:', j)
-		if(!j.data || j.data.length == 0) return false
+			__report('TODO: Criar o modal/página para a verificação e com o link criado.', 'warn')
+			return __report('Thank you for your registration!<br>Your link is:<br><b>' + j.data.link + '</b>', 'info')
+		}
+		__report(j.data.msg)
+		__report('Please try again later.', 'info')
+	}
 
-		console.log('Country:', j.data)		
+	validate(): any | boolean {
+		const name = __('#form-name')
+		const email = __('#form-email')
+		const password = __('#form-password')
+		const cpassword = __('#form-cpassword')
+		const country = __('#form-country')
+		const phone = __('#form-phone')
+		const company = __('#form-company')
+
+		if (!name.value) {
+			__report('Please enter your name')
+			return false
+		}
+		if (!email.value) {
+			__report('Please enter your email')
+			return false
+		}
+
+		if (!password.value) {
+			__report('Please enter your password')
+			return false
+		}
+		if (password.value.length < 6) {
+			__report('Your password is longer than 6 characters')
+			return false
+		}
+		if (!cpassword.value) {
+			__report('Please confirm your password')
+			return false
+		}
+		if (cpassword.value !== password.value) {
+			__report('Passwords do not match')
+			return false
+		}
+
+		if (!country.value) {
+			__report('Please select your country')
+			return false
+		}
+		if (country.dataset.id == "") {
+			__report('Please select your country')
+			return false
+		}
+
+		if (!phone.value || phone.value.length < 6) {
+			__report('Please enter your phone number')
+			return false
+		}
+
+		if (!company.value) {
+			__report('Please enter your company')
+			return false
+		}
+
+		return {
+			name: name.value,
+			email: email.value,
+			password: password.value,
+			country: country.dataset.id,
+			phone: phone.value,
+			company: company.value,
+			projects: []
+		}
+	}
+
+	async getCountries(){
+		const f = await fetch('http://localhost/a/countries')
+		const j = await f.json()
+	
+		if(j && j.error == false && j.data){
+			this.countries = j.data
+			return true
+		}
+		return false
+	}
+
+
+	async observeCountry() {
+		__('#form-country').onchange = (e: any) => {
+			let c = e.currentTarget
+			let t = false
+			this.countries.map((a: any) => {
+				if (a.name == c.value) {
+					c.dataset.id = a.id
+					t = true
+				}
+			})
+			if (!t) {
+				c.value = ""
+				c.dataset.id = ""
+			}
+		}
 	}
 
 

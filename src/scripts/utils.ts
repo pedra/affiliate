@@ -92,6 +92,7 @@ export const __toggleStatus = (e: any, state: any): string | boolean => {
 
 	x.innerHTML = `toggle_${a}`
 	x.classList[a == 'off' ? 'add' : 'remove']('off')
+	x.dataset.status = a == 'on' ? '1' : '0'
 
 	x.previousElementSibling.innerHTML = state[a].title
 	return a
