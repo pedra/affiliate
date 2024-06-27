@@ -8,6 +8,7 @@ header("Access-Control-Allow-Origin: *");
 // header("Content-Security-Policy: connect-src *; default-src *");
 
 define('PATH_ROOT', dirname(dirname(__FILE__)));
+define('PATH_INC', PATH_ROOT . '/inc');
 define('PATH_PUBLIC', PATH_ROOT . '/public');
 define('ENV', parse_ini_file(dirname(PATH_ROOT) . "/.env"));
 
@@ -16,7 +17,7 @@ static_content();
 
 // AUTO LOADER -----------------------------------------------------------------
 spl_autoload_register(function ($class) {
-	$path = PATH_ROOT . '/inc/' . strtolower(str_replace('\\', '/', $class) . '.php');
+	$path = PATH_INC . '/' . strtolower(str_replace('\\', '/', $class) . '.php');
 	if (file_exists($path)) include_once $path;
 });
 

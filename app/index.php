@@ -1,4 +1,17 @@
 <?php
+
+
+
+// $vkey = 984765;
+// $link = "https://fd2e.com/aXdf8";
+
+// include __DIR__ . "/inc/template/mail/verify.php";
+
+// echo $body;
+// echo '<hr>';
+// echo '<pre>' . $altBody . '</pre>';
+
+// exit;
 include_once __DIR__ . "/inc/utils.php";
 include_once __DIR__ . "/inc/start.php";
 

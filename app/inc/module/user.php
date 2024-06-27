@@ -2,6 +2,7 @@
 
 namespace Module;
 use \Lib\Mysql as Mysql;
+use \Lib\Mail\Mail as Mail;
 use \Module\Auth as Auth;
 
 class User {
@@ -69,7 +70,9 @@ class User {
 		
 		$sql =
 		"insert into user
-			set verified=NULL,
+			set created=NOW(),
+			verified=NULL,
+			approved=NULL,
 			code=:code,
 			vkey=:vkey,
 			secpass=:secpass,
@@ -81,6 +84,7 @@ class User {
 			phone=:phone,
 			company=:company,
 			projects=:projects";
+
 		$res = $this->db->insert($sql, [
 			":secpass" => secured_encrypt($password),
 			":code" => "111",
@@ -96,19 +100,31 @@ class User {
 		]);
 
 		if($res) {
-			$code = (new \Lib\Can())->encode($res + rand(1000, 9990));
+			$can = new \Lib\Can();
+			$code = $can->encode($res) . $can->encode(rand(1000, 9990));
 			$sql = "update user
 					set code=:code
 					where id=:id";
-			$up = $this->db->update($sql, [":code" => $code, ":id" => $res]);
-			if($up) return [
-				'error' => false, 
-				'msg' => 'Thank you for your registration!', 
-				'id' => $res,
-				'vkey' => $vkey,
-				'code' => $code,
-				'link' => ENV['URL'] . '/' . $code
-			];
+			$up = $this->db->update($sql, [
+				":code" => $code, 
+				":id" => $res
+			]);
+			
+			if($up) {
+				
+				$link = ENV['SHORT_URL'] . '/' . $code;
+				// TODO: enviar email
+				$this->sendMailVerification($vkey, $link);
+				
+				return [
+					'error' => false, 
+					'msg' => 'Thank you for your registration!', 
+					'id' => $res,
+					'vkey' => $vkey,
+					'code' => $code,
+					'link' => $link
+				];
+			}
 		}
 		return ['error' => true, 'msg' => 'Registration failed!'];
 	}
@@ -134,4 +150,37 @@ class User {
 		if(isset($res[0])) return true;
 		return false;
 	}
+
+	public function sendMailVerification ($vkey, $link)
+	{
+		$mail = new Mail();
+		include PATH_INC.'/template/mail/verify.php';
+
+		return $mail->send(
+			['paulo.rocha@outlook.com', 'ahcordesign@gmail.com', 'wellberholf@gmail.com'],
+			'Welcome to FreedomeE!',
+			$body,
+			$altBody
+		);
+	}
+
+	// public function verifyEmail ($params, $queries)
+	// {
+	// 	if(!isset($_POST['vkey'])) return false;
+
+	// 	$vkey = $_POST['vkey'];
+	// 	$sql =
+	// 	"select id, verified
+	// 		from user
+	// 		where vkey = :vkey";
+	// 	$res = $this->db->query($sql, [":vkey" => $vkey]);
+	// 	if(isset($res[0])) {
+	// 		if($res[0]['verified'] == NULL) {
+	// 			$sql =
+	// 			"update user
+	// 				set verified=NOW()
+	// 				where vkey=:vkey";
+
+								
+	// }
 }
