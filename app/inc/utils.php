@@ -98,6 +98,12 @@ function goToHome()
 	exit();
 }
 
+function goToUrl($url)
+{
+	header('Location: ' . $url);
+	exit();
+}
+
 function goTo404() {
 	header('HTTP/1.1 404 Not Found');
 	header('Status: 404 Not Found');

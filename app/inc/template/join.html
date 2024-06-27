@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<style data-merge-styles="true"></style>
+	<style data-merge-styles="true"></style>
+	<style data-merge-styles="true"></style>
+	<meta charset="UTF-8">
+	<meta name="description" content="FreedomeE Affiliate">
+	<meta name="viewport" content="width=device-width">
+	<title>Join FreedomeE</title>
+	<link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+	<link rel="manifest" href="/icon/site.webmanifest">
+	<link rel="mask-icon" href="/icon/safari-pinned-tab.svg" color="#299b69">
+	<link rel="shortcut icon" href="/icon/favicon.ico">
+	<meta name="apple-mobile-web-app-title" content="FreedomeE">
+	<meta name="application-name" content="FreedomeE">
+	<meta name="msapplication-TileColor" content="#00a300">
+	<meta name="msapplication-config" content="/icon/browserconfig.xml">
+	<meta name="theme-color" content="#1de28a">
+	<style>
+		@font-face {
+			font-family: Montserrat;
+			font-style: italic;
+			font-weight: 100 900;
+			font-display: swap;
+			src: url(/font/Montserrat.woff2) format("woff2")
+		}
+
+		@font-face {
+			font-family: mso;
+			font-stretch: 100%;
+			font-style: normal;
+			font-weight: 100 700;
+			src: url(/font/mso.woff2) format("woff2")
+		}
+
+		.material-symbols-outlined {
+			font-family: mso;
+			font-weight: 400;
+			font-style: normal;
+			font-size: 24px;
+			line-height: 1;
+			letter-spacing: normal;
+			text-transform: none;
+			display: inline-block;
+			white-space: nowrap;
+			word-wrap: normal;
+			direction: ltr;
+			font-feature-settings: "liga";
+			-webkit-font-feature-settings: "liga";
+			-webkit-font-smoothing: antialiased;
+			font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+		}
+
+		.material-symbols-outlined.not {
+			font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24
+		}
+
+		:root {
+			--primary: #b71c1c;
+			--secondary: #000;
+			--tertiary: #ff8000;
+			--hover: #889900;
+			--btn-pri-bg: #000;
+			--btn-pri-text: #fff;
+			--btn-pri-hover-bg: #fdf289;
+			--btn-pri-hover-text: #000;
+			--btn-text: #fff;
+			--btn-elevation: 0 0 2px rgba(0, 0, 0, .2);
+			--btn-border: #cccccc;
+			--text: #222222;
+			--bg: #f0f0f0;
+			--white: #fff;
+			--radius: 4px;
+			--radius-1: 8px;
+			--radius-2: 16px;
+			--radius-50: 50%
+		}
+
+		*,
+		*:before,
+		*:after {
+			margin: 0;
+			padding: 0;
+			outline: none;
+			box-sizing: border-box;
+			-moz-appearance: none;
+			-webkit-appearance: none;
+			appearance: none
+		}
+
+		html,
+		body,
+		button,
+		input,
+		select,
+		label,
+		table,
+		textarea {
+			font-size: 14px;
+			font-family: Montserrat, BlinkMacSystemFont, -apple-system, Segoe UI, system-ui, Roboto, Helvetica Neue, Ubuntu, Tahoma, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol
+		}
+
+		html,
+		body {
+			height: 100%;
+			background-size: cover;
+			background: var(--bg);
+			color: var(--text)
+		}
+
+		hr {
+			clear: both
+		}
+
+		sup {
+			margin: -.2rem .1rem 0 0;
+			font-size: .7rem
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-family: vg, os, sans-serif
+		}
+
+		h1 {
+			font-size: 4.5rem;
+			font-weight: 700;
+			color: var(--text);
+			text-shadow: none
+		}
+
+		p {
+			color: var(--text);
+			text-shadow: none;
+			clear: both
+		}
+
+		button {
+			transition: .6s;
+			min-width: 5rem;
+			min-height: 2.5rem;
+			cursor: pointer;
+			background: var(--btn-pri-bg);
+			border: none;
+			border-radius: var(--radius);
+			color: var(--btn-pri-text);
+			text-shadow: none;
+			box-shadow: var(--btn-elevation)
+		}
+
+		button:hover {
+			color: var(--btn-pri-hover-text);
+			font-weight: 500;
+			background: #eee;
+			box-shadow: -1px -3px 4px #fff, 1px 3px 6px #0000004d
+		}
+
+		button .material-icons {
+			font-size: 1.3rem;
+			margin: .2rem .5rem 0 0
+		}
+
+		button.btn-secondary {
+			color: var(--btn-text);
+			background: var(--tertiary)
+		}
+
+		button.btn-danger {
+			color: var(--btn-text);
+			background: var(--primary)
+		}
+
+		label {
+			font-size: .8rem;
+			margin: .5rem 0;
+			padding: 0 0 0 .5rem;
+			display: block
+		}
+
+		input:not([type=checkbox]):not([type=radio]):not([type=file]),
+		select,
+		textarea {
+			background: var(--btn-text);
+			border: none;
+			border-radius: var(--radius);
+			border-bottom: 1px solid var(--btn-border);
+			box-shadow: 1px 2px 4px #0000004d inset;
+			padding: .5rem 1rem;
+			margin: 0 0 1rem;
+			width: 100%;
+			min-height: 1rem
+		}
+
+		input[type=checkbox],
+		input[type=radio] {
+			width: 1rem;
+			height: 1rem;
+			float: left;
+			margin: .2rem .5rem 0 0;
+			-moz-appearance: auto;
+			-webkit-appearance: auto;
+			appearance: auto
+		}
+
+		input[type=file] {
+			opacity: 0;
+			position: absolute;
+			height: 3rem;
+			width: 3rem;
+			margin: 0
+		}
+
+		.__report {
+			position: fixed;
+			z-index: 10000;
+			margin: 0;
+			text-align: center;
+			top: 1rem;
+			right: 2rem;
+			padding: 0
+		}
+
+		.__rep-content {
+			margin: -50px auto 10px;
+			padding: 15px 20px;
+			opacity: 0;
+			transition: .2s;
+			transform: rotate(45deg);
+			transform-origin: right;
+			background: #000;
+			color: #fff;
+			text-align: left;
+			width: fit-content;
+			max-width: 300px;
+			cursor: pointer;
+			font-size: 1.2rem !important;
+			font-weight: initial !important;
+			box-shadow: 0 20px 50px #0003;
+			border-radius: 4px
+		}
+
+		.__rep-content span.__report_i {
+			padding: .3rem;
+			height: 1.4rem;
+			line-height: 1.6rem;
+			text-align: center;
+			width: 1.6rem;
+			float: right;
+			margin: -1rem -1rem 0 0;
+			font-size: 1.3rem;
+			color: #fff
+		}
+
+		.__rep-content.active {
+			opacity: 1;
+			margin-top: 10px;
+			transform: none
+		}
+
+		.__rep-info {
+			background-color: var(--report-info, #0d47a1) !important
+		}
+
+		.__rep-alert {
+			background-color: var(--report-alert, #c62828) !important
+		}
+
+		.__rep-warn {
+			background-color: var(--report-warn, #ef6c00) !important
+		}
+
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-start;
+			font-weight: 500;
+			overflow: auto
+		}
+
+		header {
+			width: 100%;
+			background: #def;
+			box-shadow: 0 3px 30px #0003
+		}
+
+		header .container {
+			margin: 0 auto;
+			width: 100%;
+			max-width: 600px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: .5rem 1rem
+		}
+
+		header .user {
+			display: flex;
+			gap: 1rem
+		}
+
+		header .user .avatar {
+			margin: 0 auto;
+			min-width: 100px;
+			max-width: 140px
+		}
+
+		header .user .avatar img {
+			width: 100%;
+			border-radius: 50%;
+			aspect-ratio: 1 / 1
+		}
+
+		header .user h1 {
+			font-size: 2rem;
+			font-weight: 300
+		}
+
+		header .user p {
+			margin: 1rem 0 0
+		}
+
+		main {
+			display: flex;
+			padding: 1rem;
+			position: relative;
+			z-index: 100;
+			flex: 1
+		}
+
+		main .container {
+			margin: 0 auto;
+			width: 100%;
+			max-width: 600px;
+			border-radius: var(--radius-1)
+		}
+
+		.profile .info {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem
+		}
+
+		.profile h1 {
+			font-size: 3rem
+		}
+
+		.card-project {
+			padding: 1rem;
+			margin: 1rem 0;
+			background: var(--white);
+			box-shadow: 0 2px 14px #0000004d;
+			border-radius: var(--radius-1)
+		}
+
+		.card-project .title {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: -.5rem
+		}
+
+		.card-project h2 {
+			font-size: 1rem;
+			font-weight: 700;
+			color: green
+		}
+
+		.card-project .selector {
+			display: flex;
+			align-items: center
+		}
+
+		.card-project p {
+			font-weight: 400
+		}
+
+		.card-project .selector span {
+			font-size: 2rem;
+			margin: 0 0 0 1rem;
+			color: green;
+			cursor: pointer
+		}
+
+		.card-project .selector span.off {
+			color: red;
+			opacity: .6
+		}
+
+		.card-project span.disabled {
+			color: #ccc;
+			cursor: not-allowed
+		}
+
+		.form .frm-input {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+			gap: 1rem
+		}
+
+		.form .left,
+		.form .right {
+			width: 100%
+		}
+
+		.control {
+			margin: 2rem 0;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 1rem
+		}
+
+		.control span {
+			display: flex;
+			align-items: center;
+			gap: .5rem
+		}
+
+		.control img {
+			height: 3rem
+		}
+
+		.control button {
+			min-width: 200px
+		}
+
+		footer {
+			display: flex;
+			align-items: center;
+			background: #def;
+			width: 100%;
+			justify-content: center
+		}
+	</style>
+	<script type="module" src="/js/script.js"></script>
+</head>
+
+<body>
+	<main>
+		<div class="container">
+			<div class="profile" id="profile">
+				<div class="info">
+					<div class="avatar" id="avatar"> <img id="aft-avatar" src="/img/logo.png" alt="user photo"> </div>
+					<h1 id="aft-name"></h1>
+				</div>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+					excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+					laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+					eveniet nesciunt.
+				</p>
+			</div>
+			<div class="projects" id="projects">
+				<div class="card-project" id="card-project-1">
+					<div class="title">
+						<h2>Around</h2>
+						<div class="selector">
+							<div>I want</div> <span class="material-symbols-outlined disabled" data-name="around"
+								data-status="1">toggle_on</span>
+						</div>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+						excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+						laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+						eveniet nesciunt.
+					</p>
+				</div>
+				<div class="card-project" id="card-project-2">
+					<div class="title">
+						<h2>Events</h2>
+						<div class="selector">
+							<div>I want</div> <span class="material-symbols-outlined" data-name="events"
+								data-status="1">toggle_on</span>
+						</div>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+						excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+						laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+						eveniet nesciunt.
+					</p>
+				</div>
+				<div class="card-project" id="card-project-3">
+					<div class="title">
+						<h2>Store</h2>
+						<div class="selector">
+							<div>I want</div> <span class="material-symbols-outlined" data-name="store"
+								data-status="1">toggle_on</span>
+						</div>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+						excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+						laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+						eveniet nesciunt.
+					</p>
+				</div>
+				<div class="card-project" id="card-project-4">
+					<div class="title">
+						<h2>Learning</h2>
+						<div class="selector">
+							<div>I want</div> <span class="material-symbols-outlined" data-name="learning"
+								data-status="1">toggle_on</span>
+						</div>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+						excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+						laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+						eveniet nesciunt.
+					</p>
+				</div>
+				<div class="card-project" id="card-project-5">
+					<div class="title">
+						<h2>Streaming</h2>
+						<div class="selector">
+							<div>I want</div> <span class="material-symbols-outlined" data-name="streaming"
+								data-status="1">toggle_on</span>
+						</div>
+					</div>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+						excepturi incidunt quia assumenda pariatur iure vel tempore nobis ea
+						laudantium soluta, quis quibusdam modi dolore quod laboriosam neque
+						eveniet nesciunt.
+					</p>
+				</div>
+			</div>
+			<div class="form">
+				<div class="frm-input">
+					<div class="left">
+						<div class="form-input"> <label for="form-name">Name</label> <input type="text" id="form-name"
+								placeholder="Your name..." spellcheck="false" data-ms-editor="true"> </div>
+						<div class="form-input"> <label for="form-email">E-mail</label> <input type="email"
+								id="form-email" placeholder="Your e-mail address..."> </div>
+						<div class="form-input"> <label for="form-password">Password</label> <input type="password"
+								id="form-password" placeholder="Your password..."> </div>
+						<div class="form-input"> <label for="form-cpassword">Confirm password</label> <input
+								type="password" id="form-cpassword" placeholder="Confirme your password..."> </div>
+					</div>
+					<div class="right">
+						<div class="form-input"> <label for="form-country">Country</label> <input type="text" data-id=""
+								list="countries" id="form-country" placeholder="Your Country..." autocomplete="off"
+								spellcheck="false" data-ms-editor="true"> <datalist id="countries">
+								<option value="Afghanistan">افغانستان</option>
+								<option value="Aland Islands">Åland</option>
+								<option value="Albania">Shqipëria</option>
+								<option value="Algeria">الجزائر</option>
+								<option value="American Samoa">American Samoa</option>
+								<option value="Andorra">Andorra</option>
+								<option value="Angola">Angola</option>
+								<option value="Anguilla">Anguilla</option>
+								<option value="Antarctica">Antarctica</option>
+								<option value="Antigua and Barbuda">Antigua and Barbuda</option>
+								<option value="Argentina">Argentina</option>
+								<option value="Armenia">Հայաստան</option>
+								<option value="Aruba">Aruba</option>
+								<option value="Australia">Australia</option>
+								<option value="Austria">Österreich</option>
+								<option value="Azerbaijan">Azərbaycan</option>
+								<option value="Bahrain">‏البحرين</option>
+								<option value="Bangladesh">Bangladesh</option>
+								<option value="Barbados">Barbados</option>
+								<option value="Belarus">Белару́сь</option>
+								<option value="Belgium">België</option>
+								<option value="Belize">Belize</option>
+								<option value="Benin">Bénin</option>
+								<option value="Bermuda">Bermuda</option>
+								<option value="Bhutan">ʼbrug-yul</option>
+								<option value="Bolivia">Bolivia</option>
+								<option value="Bonaire, Sint Eustatius and Saba">Caribisch Nederland</option>
+								<option value="Bosnia and Herzegovina">Bosna i Hercegovina</option>
+								<option value="Botswana">Botswana</option>
+								<option value="Bouvet Island">Bouvetøya</option>
+								<option value="Brazil">Brasil</option>
+								<option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+								<option value="Brunei">Negara Brunei Darussalam</option>
+								<option value="Bulgaria">България</option>
+								<option value="Burkina Faso">Burkina Faso</option>
+								<option value="Burundi">Burundi</option>
+								<option value="Cambodia">Kâmpŭchéa</option>
+								<option value="Cameroon">Cameroon</option>
+								<option value="Canada">Canada</option>
+								<option value="Cape Verde">Cabo Verde</option>
+								<option value="Cayman Islands">Cayman Islands</option>
+								<option value="Central African Republic">Ködörösêse tî Bêafrîka</option>
+								<option value="Chad">Tchad</option>
+								<option value="Chile">Chile</option>
+								<option value="China">中国</option>
+								<option value="Christmas Island">Christmas Island</option>
+								<option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+								<option value="Colombia">Colombia</option>
+								<option value="Comoros">Komori</option>
+								<option value="Congo">République du Congo</option>
+								<option value="Cook Islands">Cook Islands</option>
+								<option value="Costa Rica">Costa Rica</option>
+								<option value="Cote D'Ivoire (Ivory Coast)">null</option>
+								<option value="Croatia">Hrvatska</option>
+								<option value="Cuba">Cuba</option>
+								<option value="Curaçao">Curaçao</option>
+								<option value="Cyprus">Κύπρος</option>
+								<option value="Czech Republic">Česká republika</option>
+								<option value="Democratic Republic of the Congo">République démocratique du Congo
+								</option>
+								<option value="Denmark">Danmark</option>
+								<option value="Djibouti">Djibouti</option>
+								<option value="Dominica">Dominica</option>
+								<option value="Dominican Republic">República Dominicana</option>
+								<option value="Ecuador">Ecuador</option>
+								<option value="Egypt">مصر‎</option>
+								<option value="El Salvador">El Salvador</option>
+								<option value="Equatorial Guinea">Guinea Ecuatorial</option>
+								<option value="Eritrea">ኤርትራ</option>
+								<option value="Estonia">Eesti</option>
+								<option value="Eswatini">Swaziland</option>
+								<option value="Ethiopia">ኢትዮጵያ</option>
+								<option value="Falkland Islands">Falkland Islands</option>
+								<option value="Faroe Islands">Føroyar</option>
+								<option value="Fiji Islands">Fiji</option>
+								<option value="Finland">Suomi</option>
+								<option value="France">France</option>
+								<option value="French Guiana">Guyane française</option>
+								<option value="French Polynesia">Polynésie française</option>
+								<option value="French Southern Territories">Territoire des Terres australes et
+									antarctiques fr</option>
+								<option value="Gabon">Gabon</option>
+								<option value="Gambia The">Gambia</option>
+								<option value="Georgia">საქართველო</option>
+								<option value="Germany">Deutschland</option>
+								<option value="Ghana">Ghana</option>
+								<option value="Gibraltar">Gibraltar</option>
+								<option value="Greece">Ελλάδα</option>
+								<option value="Greenland">Kalaallit Nunaat</option>
+								<option value="Grenada">Grenada</option>
+								<option value="Guadeloupe">Guadeloupe</option>
+								<option value="Guam">Guam</option>
+								<option value="Guatemala">Guatemala</option>
+								<option value="Guernsey and Alderney">Guernsey</option>
+								<option value="Guinea">Guinée</option>
+								<option value="Guinea-Bissau">Guiné-Bissau</option>
+								<option value="Guyana">Guyana</option>
+								<option value="Haiti">Haïti</option>
+								<option value="Heard Island and McDonald Islands">Heard Island and McDonald Islands
+								</option>
+								<option value="Honduras">Honduras</option>
+								<option value="Hong Kong S.A.R.">香港</option>
+								<option value="Hungary">Magyarország</option>
+								<option value="Iceland">Ísland</option>
+								<option value="India">भारत</option>
+								<option value="Indonesia">Indonesia</option>
+								<option value="Iran">ایران</option>
+								<option value="Iraq">العراق</option>
+								<option value="Ireland">Éire</option>
+								<option value="Israel">יִשְׂרָאֵל</option>
+								<option value="Italy">Italia</option>
+								<option value="Jamaica">Jamaica</option>
+								<option value="Japan">日本</option>
+								<option value="Jersey">Jersey</option>
+								<option value="Jordan">الأردن</option>
+								<option value="Kazakhstan">Қазақстан</option>
+								<option value="Kenya">Kenya</option>
+								<option value="Kiribati">Kiribati</option>
+								<option value="Kosovo">Republika e Kosovës</option>
+								<option value="Kuwait">الكويت</option>
+								<option value="Kyrgyzstan">Кыргызстан</option>
+								<option value="Laos">ສປປລາວ</option>
+								<option value="Latvia">Latvija</option>
+								<option value="Lebanon">لبنان</option>
+								<option value="Lesotho">Lesotho</option>
+								<option value="Liberia">Liberia</option>
+								<option value="Libya">‏ليبيا</option>
+								<option value="Liechtenstein">Liechtenstein</option>
+								<option value="Lithuania">Lietuva</option>
+								<option value="Luxembourg">Luxembourg</option>
+								<option value="Macau S.A.R.">澳門</option>
+								<option value="Madagascar">Madagasikara</option>
+								<option value="Malawi">Malawi</option>
+								<option value="Malaysia">Malaysia</option>
+								<option value="Maldives">Maldives</option>
+								<option value="Mali">Mali</option>
+								<option value="Malta">Malta</option>
+								<option value="Man (Isle of)">Isle of Man</option>
+								<option value="Marshall Islands">M̧ajeļ</option>
+								<option value="Martinique">Martinique</option>
+								<option value="Mauritania">موريتانيا</option>
+								<option value="Mauritius">Maurice</option>
+								<option value="Mayotte">Mayotte</option>
+								<option value="Mexico">México</option>
+								<option value="Micronesia">Micronesia</option>
+								<option value="Moldova">Moldova</option>
+								<option value="Monaco">Monaco</option>
+								<option value="Mongolia">Монгол улс</option>
+								<option value="Montenegro">Црна Гора</option>
+								<option value="Montserrat">Montserrat</option>
+								<option value="Morocco">المغرب</option>
+								<option value="Mozambique">Moçambique</option>
+								<option value="Myanmar">မြန်မာ</option>
+								<option value="Namibia">Namibia</option>
+								<option value="Nauru">Nauru</option>
+								<option value="Nepal">नपल</option>
+								<option value="Netherlands">Nederland</option>
+								<option value="New Caledonia">Nouvelle-Calédonie</option>
+								<option value="New Zealand">New Zealand</option>
+								<option value="Nicaragua">Nicaragua</option>
+								<option value="Niger">Niger</option>
+								<option value="Nigeria">Nigeria</option>
+								<option value="Niue">Niuē</option>
+								<option value="Norfolk Island">Norfolk Island</option>
+								<option value="North Korea">북한</option>
+								<option value="North Macedonia">Северна Македонија</option>
+								<option value="Northern Mariana Islands">Northern Mariana Islands</option>
+								<option value="Norway">Norge</option>
+								<option value="Oman">عمان</option>
+								<option value="Pakistan">Pakistan</option>
+								<option value="Palau">Palau</option>
+								<option value="Palestinian Territory Occupied">فلسطين</option>
+								<option value="Panama">Panamá</option>
+								<option value="Papua New Guinea">Papua Niugini</option>
+								<option value="Paraguay">Paraguay</option>
+								<option value="Peru">Perú</option>
+								<option value="Philippines">Pilipinas</option>
+								<option value="Pitcairn Island">Pitcairn Islands</option>
+								<option value="Poland">Polska</option>
+								<option value="Portugal">Portugal</option>
+								<option value="Puerto Rico">Puerto Rico</option>
+								<option value="Qatar">قطر</option>
+								<option value="Reunion">La Réunion</option>
+								<option value="Romania">România</option>
+								<option value="Russia">Россия</option>
+								<option value="Rwanda">Rwanda</option>
+								<option value="Saint Helena">Saint Helena</option>
+								<option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+								<option value="Saint Lucia">Saint Lucia</option>
+								<option value="Saint Pierre and Miquelon">Saint-Pierre-et-Miquelon</option>
+								<option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines
+								</option>
+								<option value="Saint-Barthelemy">Saint-Barthélemy</option>
+								<option value="Saint-Martin (French part)">Saint-Martin</option>
+								<option value="Samoa">Samoa</option>
+								<option value="San Marino">San Marino</option>
+								<option value="Sao Tome and Principe">São Tomé e Príncipe</option>
+								<option value="Saudi Arabia">المملكة العربية السعودية</option>
+								<option value="Senegal">Sénégal</option>
+								<option value="Serbia">Србија</option>
+								<option value="Seychelles">Seychelles</option>
+								<option value="Sierra Leone">Sierra Leone</option>
+								<option value="Singapore">Singapore</option>
+								<option value="Sint Maarten (Dutch part)">Sint Maarten</option>
+								<option value="Slovakia">Slovensko</option>
+								<option value="Slovenia">Slovenija</option>
+								<option value="Solomon Islands">Solomon Islands</option>
+								<option value="Somalia">Soomaaliya</option>
+								<option value="South Africa">South Africa</option>
+								<option value="South Georgia">South Georgia</option>
+								<option value="South Korea">대한민국</option>
+								<option value="South Sudan">South Sudan</option>
+								<option value="Spain">España</option>
+								<option value="Sri Lanka">śrī laṃkāva</option>
+								<option value="Sudan">السودان</option>
+								<option value="Suriname">Suriname</option>
+								<option value="Svalbard and Jan Mayen Islands">Svalbard og Jan Mayen</option>
+								<option value="Sweden">Sverige</option>
+								<option value="Switzerland">Schweiz</option>
+								<option value="Syria">سوريا</option>
+								<option value="Taiwan">臺灣</option>
+								<option value="Tajikistan">Тоҷикистон</option>
+								<option value="Tanzania">Tanzania</option>
+								<option value="Thailand">ประเทศไทย</option>
+								<option value="The Bahamas">Bahamas</option>
+								<option value="Timor-Leste">Timor-Leste</option>
+								<option value="Togo">Togo</option>
+								<option value="Tokelau">Tokelau</option>
+								<option value="Tonga">Tonga</option>
+								<option value="Trinidad and Tobago">Trinidad and Tobago</option>
+								<option value="Tunisia">تونس</option>
+								<option value="Turkey">Türkiye</option>
+								<option value="Turkmenistan">Türkmenistan</option>
+								<option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+								<option value="Tuvalu">Tuvalu</option>
+								<option value="Uganda">Uganda</option>
+								<option value="Ukraine">Україна</option>
+								<option value="United Arab Emirates">دولة الإمارات العربية المتحدة</option>
+								<option value="United Kingdom">United Kingdom</option>
+								<option value="United States">United States</option>
+								<option value="United States Minor Outlying Islands">United States Minor Outlying
+									Islands</option>
+								<option value="Uruguay">Uruguay</option>
+								<option value="Uzbekistan">O‘zbekiston</option>
+								<option value="Vanuatu">Vanuatu</option>
+								<option value="Vatican City State (Holy See)">Vaticano</option>
+								<option value="Venezuela">Venezuela</option>
+								<option value="Vietnam">Việt Nam</option>
+								<option value="Virgin Islands (British)">British Virgin Islands</option>
+								<option value="Virgin Islands (US)">United States Virgin Islands</option>
+								<option value="Wallis and Futuna Islands">Wallis et Futuna</option>
+								<option value="Western Sahara">الصحراء الغربية</option>
+								<option value="Yemen">اليَمَن</option>
+								<option value="Zambia">Zambia</option>
+								<option value="Zimbabwe">Zimbabwe</option>
+							</datalist> </div>
+						<div class="form-input"> <label for="form-phone">Phone (numbers only)</label> <input
+								type="number" id="form-phone" placeholder="Your phone number..."> </div>
+						<div class="form-input"> <label for="form-company">Company</label> <input type="text"
+								id="form-company" placeholder="Your company..." spellcheck="false"
+								data-ms-editor="true"> </div>
+						<div style="background:#ff0;padding:1rem">
+							TODO: Usar Grid Area em diferentes tamanhos de tela
+						</div>
+					</div>
+				</div>
+				<div class="control"> <span>Discover
+						<a href="https://freedomee.network">FreedomeE.network</a> now!</span> <button
+						id="form-submit">Create</button> </div>
+			</div>
+		</div>
+	</main>
+	<footer> <a href="https://freedomee.network"><img src="/img/logo.png" alt="logo"></a>
+		<div>© 2024 All rights reserved</div>
+	</footer>
+	<div class="__report" id="__report"></div> <input type="hidden" id="aft-link" value="xs3">
+</body>
+
+</html>

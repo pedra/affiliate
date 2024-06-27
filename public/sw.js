@@ -13,7 +13,7 @@ const ASSETS=[
 	"/icon/site.webmanifest",
 
 	"/img/logo.png",
-	"/img/og.jpg",
+	"/img/logo.jpg",
 	"/img/1.jpg",
 	"/img/2.jpg",
 	"/img/3.jpg",

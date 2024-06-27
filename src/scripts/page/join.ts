@@ -1,15 +1,16 @@
-import { __, __e, __c, __delay, __report, __toggleStatus } from "@scripts/utils"
+import { __, __e, __c, __delay, __glass, __report, __toggleStatus } from "@scripts/utils"
 
 export default class JoinClass {
 
-	eLink: HTMLInputElement | null = null
-
-	eName: HTMLHeadElement | null = null
 	eAvatar: HTMLImageElement | null = null
 	eProjects: [HTMLSpanElement] | null = null
-
+	
 	eFormCountry: HTMLInputElement | null = null
 	eSubmit: HTMLButtonElement | null = null
+	
+	aftName: string | null = null
+	aftId: string | null = null
+	aftCode: string | null = null
 
 	user = []
 	state = {
@@ -20,8 +21,10 @@ export default class JoinClass {
 
 	constructor() {
 		this.getCountries()
-		this.eLink = __('#aft-link')
-		this.eName = __('#aft-name')
+		this.aftName = __('#aft-name').value		
+		this.aftId = __('#aft-id').value
+		this.aftCode = __('#aft-code').value
+
 		this.eAvatar = __('#aft-avatar')
 		this.eProjects = __('.selector span', true)
 
@@ -33,19 +36,23 @@ export default class JoinClass {
 		this.eProjects?.forEach((a: any) => __e((e: any) => __toggleStatus(e, this.state), a))
 		this.observeCountry()
 		__e(()=>this.submit(), this.eSubmit)
+		//__glass()
 	}
 
 	async submit() {
+		__glass()
 		const data = this.validate()
 		console.log('Submit Validade', data )
-		if (data == false) return false
+		if (data === false) return __glass(false)
 
 		this.eProjects?.forEach((a: any) => { if(a.dataset.status == '1') data.projects.push(a.dataset.name) })
 		console.log('Data in Submit', data)
 		data.projects = data.projects.join(',')
 		
-		if (data.projects.length == 0 || data.projects.indexOf('around') == -1) 
+		if (data.projects.length == 0 || data.projects.indexOf('around') == -1) {
+			__glass(false)
 			return __report('Please select at least one project')
+		}
 		
 		const frm = new FormData()
 		for(let i in data){
@@ -57,10 +64,13 @@ export default class JoinClass {
 		if(j && j.error === false && j.data && j.data.error === false){
 
 			__report('TODO: Criar o modal/página para a verificação e com o link criado.', 'warn')
+			__glass(false)
 			return __report('Thank you for your registration!<br>Your link is:<br><b>' + j.data.link + '</b>', 'info')
 		}
+		__glass(false)
 		__report(j.data.msg)
 		__report('Please try again later.', 'info')
+
 	}
 
 	validate(): any | boolean {
@@ -118,6 +128,7 @@ export default class JoinClass {
 		}
 
 		return {
+			affiliate: this.aftId,
 			name: name.value,
 			email: email.value,
 			password: password.value,

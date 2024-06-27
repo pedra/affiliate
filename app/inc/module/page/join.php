@@ -16,13 +16,23 @@ class Join {
 	public function index ($params, $queries)
 	{
 		$sql =
-			"select id, name
+			"select id, name, code
 			from user
-			where code = :link";
-		$res = $this->db->query($sql, [":link" => $params[0]]);
+			where code = :code";
+		$res = $this->db->query($sql, [":code" => $params[0]]);
 		if (isset($res[0])) {
 			$join = file_get_contents(PATH_PUBLIC . '/join/index.html');
-			$join = str_replace('</body>', '<input type="hidden" id="aft-link" value="' . $params[0] . '"/></body>', $join);
+
+			$join = str_replace('[[name]]', $res[0]['name'], $join);
+			$join = str_replace('[[id]]', $res[0]['id'], $join);
+			$join = str_replace('[[code]]', $res[0]['code'], $join);
+
+			/* TODO: 
+
+				1 - Check if the user is verified + approved
+				2 - Create country list on <datalist id="countries"></datalist> (e.g.: template/join.html)
+
+			*/
 			exit($join);
 		}
 

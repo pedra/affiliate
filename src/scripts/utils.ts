@@ -31,16 +31,15 @@ export const __randomize = (max: any): number => Math.floor(Math.random() * pars
 
 export const __delay = (ms: number) => new Promise(r => setTimeout(r, ms))
 
-export const __glass = (a:boolean = true) => {
-	if (a === false) return __('.__glass').classList.remove('on')
+export const __glass = (a:boolean = true) => {console.log('Glass:', a ? 'true' : 'false')
+	if (a === false) return __('.__glass').classList.remove('active')
 	let g = __('.__glass')
 	if (!g) {
-		let b:any = __c('div', { class: '__glass' }, __c('img', { src: "/asset/img/l.gif", alt: 'loading'}))
-		document.body.appendChild(b)
-		setTimeout(() => b.classList.add('on'), 200)
+		let b: any = __c('div', { class: '__glass active' }, __c('div', { class: 'loader'}))
+		__('body').appendChild(b)
 		return
 	}
-	g.classList.add('on')
+	g.classList.add('active')
 }
 
 // Mostra mensagem na tela
@@ -55,17 +54,24 @@ export const __report = async (
 	type = '__rep-' + ((type == 'info' || type == 'i') ? "info" : (type == 'warn' || type == 'w') ? "warn" : "alert")
 
 	const id = '__'+__random()
-	const c = document.createElement('DIV')
-	c.className = `__rep-content ${type}`
-	c.id = id
-	c.innerHTML = '<span class="material-symbols-outlined pulse __report_i">close</span>' + text
-	c.onclick = function (e: any): void {
+
+	const c = __c('div', { class: `__rep-content ${type}`, id }, 
+		__c('span', { class: '__report_i material-symbols-outlined pulse' }, 'close'))
+	c.innerHTML += text
+
+	__e((e: any) => async (e: any):Promise<void> => {
 		const x = e.currentTarget
 		x.classList.remove('active')
-		__delay(400).then(() => x.remove())
+		await __delay(400)
+		x.remove()
+	})
+	
+	let r = __('#__report')
+	if(!r) {
+		r = __c('div', { class: '__report', id: '__report' })
+		__('body').appendChild(r)
 	}
-
-	__('#__report')?.appendChild(c)
+	r?.appendChild(c)
 
 	await __delay(500)
 	__('#'+id).classList.add('active')

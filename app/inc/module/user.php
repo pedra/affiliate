@@ -51,6 +51,12 @@ class User {
 			return ['error' => true, 'msg' => '"Company" must be at least 6 characters!'];
 		if(!isset($_POST['projects']) && !str_contains($_POST['projects'], 'around'))
 			return ['error' => true, 'msg' => '"Projects" must contain "around"!'];
+		if(!isset($_POST['affiliate']) && $_POST['affiliate'] == '')
+			return ['error' => true, 'msg' => 'This affiliate is not enabled!<br>Check if the <b>link</b> is correct or contact us.'];
+		
+		$affiliate = trim($_POST['affiliate']);
+		if(!$this->userExists($affiliate))
+			return ['error' => true, 'msg' => 'This affiliate is not enabled!<br>Check if the <b>link</b> is correct or contact us.'];
 
 		$name = trim($_POST['name']);
 		$email = trim($_POST['email']);
@@ -70,7 +76,8 @@ class User {
 		
 		$sql =
 		"insert into user
-			set created=NOW(),
+			set affiliate=:affiliate,
+			created=NOW(),
 			verified=NULL,
 			approved=NULL,
 			code=:code,
@@ -90,6 +97,7 @@ class User {
 			":code" => "111",
 			":vkey" => $vkey,
 
+			":affiliate" => $affiliate,
 			":name" => $name,
 			":email" => $email,
 			":password" => password_hash($password, PASSWORD_DEFAULT),
@@ -113,8 +121,7 @@ class User {
 			if($up) {
 				
 				$link = ENV['SHORT_URL'] . '/' . $code;
-				// TODO: enviar email
-				$this->sendMailVerification($vkey, $link);
+				$this->sendMailVerification($email, $vkey, $link);
 				
 				return [
 					'error' => false, 
@@ -127,6 +134,19 @@ class User {
 			}
 		}
 		return ['error' => true, 'msg' => 'Registration failed!'];
+	}
+
+	public function userExists($user)
+	{
+		$sql =
+		"select id
+			from user
+			where id = :user
+			and verified is not null
+			and approved is not null";
+		$res = $this->db->query($sql, [":user" => $user]);
+		if(isset($res[0])) return true;
+		return false;
 	}
 
 	public function countryExists($country)
@@ -142,6 +162,10 @@ class User {
 
 	public function emailExists($email)
 	{
+		// DEVELOP ONLY - BEGIN
+		if ($email == 'email@.email.com') return false;
+		// DEVELOP ONLY - END
+
 		$sql =
 		"select id
 			from user
@@ -151,18 +175,32 @@ class User {
 		return false;
 	}
 
-	public function sendMailVerification ($vkey, $link)
+	public function sendMailVerification ($email, $vkey, $link)
 	{
 		$mail = new Mail();
 		include PATH_INC.'/template/mail/verify.php';
 
+		// DEVELOP ONLY - BEGIN
+		$to = [
+			'paulo.rocha@outlook.com',
+			'ahcordesign@gmail.com'
+		];
+		if ($email != 'email@.email.com') array_push($to, $email);
+		// DEVELOP ONLY - END
+
 		return $mail->send(
-			['paulo.rocha@outlook.com', 'ahcordesign@gmail.com', 'wellberholf@gmail.com'],
-			'Welcome to FreedomeE!',
+			$to,
+			$subject,			
 			$body,
 			$altBody
 		);
 	}
+
+	/* TODO: verifyEmail() 👇
+		
+		1 - Force user to type password, before.
+
+	*/
 
 	// public function verifyEmail ($params, $queries)
 	// {

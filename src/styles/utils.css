@@ -63,3 +63,35 @@
 .__rep-warn {
 	background-color: var(--report-warn,#ef6c00) !important;
 }
+
+/* 
+   -------------------------------------------------------
+            GLASS
+   ------------------------------------------------------- 
+*/
+
+.__glass {
+	position: fixed;
+	z-index: -100;
+	opacity: 0;
+	inset: 0;
+	display: flex;
+	align-items: center;
+    justify-content: center;
+	transform: scale(0);
+	transition: 1s;
+}
+
+.__glass .loader {	
+	background: url(/img/l.gif) no-repeat center center;
+	width: 100px;
+	aspect-ratio: 1/1;
+}
+
+.__glass.active {
+	z-index: 10000;
+    opacity: 1;
+    transform: none;
+	backdrop-filter: blur(5px);
+	background: rgba(255,255,255,0.2);
+}

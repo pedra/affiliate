@@ -1,6 +1,6 @@
 <?php
 
-namespace Module;
+namespace Module\Page;
 use \Lib\Mysql as Mysql;
 use \Module\Auth as Auth;
 
