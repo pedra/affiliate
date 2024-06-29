@@ -59,12 +59,12 @@ export const __report = async (
 		__c('span', { class: '__report_i material-symbols-outlined pulse' }, 'close'))
 	c.innerHTML += text
 
-	__e((e: any) => async (e: any):Promise<void> => {
+	__e(async (e: any):Promise<void> => {
 		const x = e.currentTarget
 		x.classList.remove('active')
 		await __delay(400)
 		x.remove()
-	})
+	}, c)
 	
 	let r = __('#__report')
 	if(!r) {

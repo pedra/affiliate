@@ -10,6 +10,7 @@ header("Access-Control-Allow-Origin: *");
 define('PATH_ROOT', dirname(dirname(__FILE__)));
 define('PATH_INC', PATH_ROOT . '/inc');
 define('PATH_PUBLIC', PATH_ROOT . '/public');
+define('PATH_TEMPLATE', PATH_ROOT . '/template');
 define('ENV', parse_ini_file(dirname(PATH_ROOT) . "/.env"));
 
 // Load static content ---------------------------------------------------------

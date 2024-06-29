@@ -14,12 +14,23 @@ if ($_SERVER['HTTP_HOST'] == 'fd2e.com') {
 	->get('/', '\Module\Page\Page', 'home')
 	->get('/profile', '\Module\Page\Page', 'profile')
 
+	
+	// Check the link sent to the email in the affiliate registration.
+	->get('/check/(.*)', '\Module\Page\Page', 'check')
+
+	// DEBUG
+	->get('/verified', '\Module\Page\Join', 'verified')
+	// DEBUG
+
+
+
 	// APIs
 	->get('/a/country/(.*)', '\Module\Page\Join', 'searchCountry')
 	->get('/a/countries', '\Module\Page\Join', 'countries')
 
 	// Add affiliate
 	->post('/a/submit', '\Module\User', 'submit')
+	->post('/a/verify', '\Module\User', 'verify')
 
 	// User
 	->post('/profile', '\Module\User', 'getUserByLink')

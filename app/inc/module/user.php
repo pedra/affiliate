@@ -69,7 +69,8 @@ class User {
 		$company = trim($_POST['company']);
 		$projects = trim($_POST['projects']);
 
-		$vkey = rand(100000, 999999);
+		$verification_key = rand(100000, 999999);
+		$verification_link = uniqid();
 
 		$res = 72456;
 		$up = 72456;
@@ -81,7 +82,8 @@ class User {
 			verified=NULL,
 			approved=NULL,
 			code=:code,
-			vkey=:vkey,
+			verification_key=:verification_key,
+			verification_link=:verification_link,
 			secpass=:secpass,
 
 			name=:name,
@@ -95,7 +97,8 @@ class User {
 		$res = $this->db->insert($sql, [
 			":secpass" => secured_encrypt($password),
 			":code" => "111",
-			":vkey" => $vkey,
+			":verification_key" => $verification_key,
+			":verification_link" => $verification_link,
 
 			":affiliate" => $affiliate,
 			":name" => $name,
@@ -120,16 +123,18 @@ class User {
 			
 			if($up) {
 				
-				$link = ENV['SHORT_URL'] . '/' . $code;
-				$this->sendMailVerification($email, $vkey, $link);
+				$link = ENV['SHORT_URL'] . '/' . $link;
+				$vlink = ENV['URL'] . '/check/' . $verification_link;
+				$this->sendMailVerification($email, $verification_key, $vlink);
 				
 				return [
 					'error' => false, 
 					'msg' => 'Thank you for your registration!', 
 					'id' => $res,
-					'vkey' => $vkey,
+					'verification_key' => $verification_key,
 					'code' => $code,
-					'link' => $link
+					'link' => $link,
+					'vlink' => $vlink
 				];
 			}
 		}
@@ -175,7 +180,7 @@ class User {
 		return false;
 	}
 
-	public function sendMailVerification ($email, $vkey, $link)
+	public function sendMailVerification ($email, $verification_key, $link)
 	{
 		$mail = new Mail();
 		include PATH_INC.'/template/mail/verify.php';
@@ -202,22 +207,108 @@ class User {
 
 	*/
 
-	// public function verifyEmail ($params, $queries)
-	// {
-	// 	if(!isset($_POST['vkey'])) return false;
+	public function verifyEmail ($params, $queries)
+	{
+		if(!isset($_POST['verification_key'])) return false;
 
-	// 	$vkey = $_POST['vkey'];
-	// 	$sql =
-	// 	"select id, verified
-	// 		from user
-	// 		where vkey = :vkey";
-	// 	$res = $this->db->query($sql, [":vkey" => $vkey]);
-	// 	if(isset($res[0])) {
-	// 		if($res[0]['verified'] == NULL) {
-	// 			$sql =
-	// 			"update user
-	// 				set verified=NOW()
-	// 				where vkey=:vkey";
+		$verification_key = $_POST['verification_key'];
+		$sql =
+		"select id, verified
+			from user
+			where verification_key = :verification_key";
+		$res = $this->db->query($sql, [":verification_key" => $verification_key]);
+		if(isset($res[0])) {
+			if($res[0]['verified'] == NULL) {
+				$sql =
+				"update user
+					set verified=NOW()
+					where verification_key=:verification_key";
+						$this->db->update($sql, [":verification_key" => $verification_key]);
+				return ['error' => false, 'msg' => '']];
+			}
+		}
+		return false;
+	}
+
+	public function login ($params, $queries)
+	{
+		if(!isset($_POST['email']) && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			return ['error' => true, 'msg' => '"Email" is not valid!'];
+		if(!isset($_POST['password']) && strlen($_POST['password']) < 6)
+			return ['error' => true, 'msg' => '"Password" must be at least 6 characters!'];
+
+		$email = trim($_POST['email']);
+		$password = trim($_POST['password']);
+
+		$sql =
+		"select id, password, verified, approved
+			from user
+			where email = :email";
+				$res = $this->db->query($sql, [":email" => $email]);
+		if(isset($res[0])) {
+			if($res[0]['verified'] != NULL && $res[0]['approved'] != NULL) {
+				if(password_verify($password, $res[0]['password'])) {
+					(new Auth)->set($res[0]['id']);
+					return ['error' => false, 'msg' => 'Welcome!'];
+				}
+				return ['error' => true, 'msg' => 'Wrong password!'];
+			}
+			return ['error' => true, 'msg' => 'This account is not verified or approved!'];
+		}
+		return ['error' => true, 'msg' => 'Email not found!'];
+	}
+
+	public function forgotPassword ($params, $queries)
+	{
+		if(!isset($_POST['email']) && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			return ['error' => true, 'msg' => '"Email" is not valid!'];
+
+		$email = trim($_POST['email']);
+
+		$sql =
+		"select id, name
+			from user
+			where email = :email";
+				$res = $this->db->query($sql, [":email" => $email]);
+		if(isset($res[0])) {
+			$verification_key = rand(100000, 999999);
+			$sql =
+			"update user
+				set verification_key=:verification_key
+				where id=:id";
+						$this->db->update($sql, [
+					":verification_key" => $verification_key,
+					":id" => $res[0]['id']
+				]);
+
+			$link = ENV['SHORT_URL'] . '/' . $res[0]['id'] . '/' . $verification_key;
+			$this->sendMailForgotPassword($email, $res[0]['name'], $link);
+
+			return ['error' => false, 'msg' => 'Check your email!'];
+		}
+		return ['error' => true, 'msg' => 'Email not found!'];
+	}
+
+	// public function sendMailForgotPassword ($email, $name, $link)
+	// {
+	// 	$mail = new Mail();
+	// 	include PATH_INC.'/template/mail/forgot.php';
+
+	// 	// DEVELOP ONLY - BEGIN
+	// 	$to = [
+	// 			'XXXXXXXXXXXXXXXXXXXXXXX',
+	// 			'XXXXXXXXXXXXXXXXXXXXX'
+	// 		];
+	// 			if ($email != 'XXXXXXXXXXXXXXXX') array_push($to, $email);
+	// 				// DEVELOP ONLY - END
+
+	// 				return $mail->send(
+	// 					$to,
+	// 					$subject,
+	// 					$body,
+	// 					$altBody
+	// 				);
+	// 				9				
 
 								
 	// }

@@ -63,7 +63,9 @@ class Auth {
 		$sql = "
 			select id, name, password
 			from user
-			where email = :email";
+			where email = :email 
+			and verified is not null
+			#and approved is not null";
 		$res = $this->db->query($sql, [":email" => $email]);
 		if(isset($res[0]) && password_verify($password, $res[0]['password'])) {
 			$user = ["name" => $res[0]["name"], "id" => $res[0]["id"]];
@@ -83,7 +85,7 @@ class Auth {
 			u.verified verified,
 			u.approved approved,
 			u.code code,
-			u.vkey vkey,
+			u.verification_key verification_key,
 			u.phone phone, 
 			u.company company,
 			u.project project,

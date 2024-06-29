@@ -19,27 +19,11 @@ class Page {
 		exit();
 	}
 
-	public function join($params, $queries)
-	{
-		$sql =
-			"select id, name
-			from user
-			where code = :link";
-		$res = $this->db->query($sql, [":link" => $params[0]]);
-		if (isset($res[0])) {		
-			$join = file_get_contents(PATH_PUBLIC . '/join/index.html');
-			$join = str_replace('</body>', '<input type="hidden" id="aft-link" value="' . $params[0] . '"/></body>', $join);
-			exit($join);
-		}
-
-		goToHome();
-	}
-
 	public function profile($params, $queries)
 	{
 		(new Auth)->check();	
 	
-		include_once PATH_PUBLIC . '/profile/index.html';
+		include_once PATH_TEMPLATE . '/page/profile.php';
 		exit();
 	}
 
@@ -56,6 +40,31 @@ class Page {
 		$res = $this->db->query($sql, [":link" => $link]);
 		if(isset($res[0])) return $res[0];
 		return false;
+	}
+
+	public function check($params, $queries)
+	{
+		$code = $params[0] ?? false;
+		if(!$code) return goToHome();
+
+		$sql =
+		"select id
+			from user
+			where verification_link = :code";
+		$res = $this->db->query($sql, [":code" => $code]);
+		if(isset($res[0]) && $res[0]['id']) {
+			$sql =
+			"update user
+				set verification_link = null,
+					verified = now()
+				where id = :id";
+			$this->db->query($sql, [":id" => $res[0]['id']]);
+			
+			include_once PATH_TEMPLATE . '/page/check.php';
+			exit;
+		}
+
+		goToHome();
 	}
 
 	

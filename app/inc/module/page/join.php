@@ -21,11 +21,12 @@ class Join {
 			where code = :code";
 		$res = $this->db->query($sql, [":code" => $params[0]]);
 		if (isset($res[0])) {
-			$join = file_get_contents(PATH_PUBLIC . '/join/index.html');
 
-			$join = str_replace('[[name]]', $res[0]['name'], $join);
-			$join = str_replace('[[id]]', $res[0]['id'], $join);
-			$join = str_replace('[[code]]', $res[0]['code'], $join);
+			$name = $res[0]['name'];
+			$id = $res[0]['id'];
+			$code = $res[0]['code'];
+
+			include_once PATH_TEMPLATE . '/page/join.php';
 
 			/* TODO: 
 
@@ -33,10 +34,15 @@ class Join {
 				2 - Create country list on <datalist id="countries"></datalist> (e.g.: template/join.html)
 
 			*/
-			exit($join);
+			exit;
 		}
 
 		goToHome();
+	}
+
+	public function verified(){
+		include_once PATH_TEMPLATE . '/page/verified.php';
+		exit;
 	}
 
 	public function searchCountry($params, $queries)

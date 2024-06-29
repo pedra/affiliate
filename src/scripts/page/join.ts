@@ -21,7 +21,10 @@ export default class JoinClass {
 
 	constructor() {
 		this.getCountries()
-		this.aftName = __('#aft-name').value		
+	}
+
+	async init() {
+		this.aftName = __('#aft-name').value
 		this.aftId = __('#aft-id').value
 		this.aftCode = __('#aft-code').value
 
@@ -30,13 +33,14 @@ export default class JoinClass {
 
 		this.eFormCountry = __('#form-country')
 		this.eSubmit = __('#form-submit')
-	}
 
-	async init() {
 		this.eProjects?.forEach((a: any) => __e((e: any) => __toggleStatus(e, this.state), a))
 		this.observeCountry()
 		__e(()=>this.submit(), this.eSubmit)
-		//__glass()
+		
+		
+		//debug
+		__e(() => this.pageCode({link: 'fd2e.com/Sfg3'}) ,'#debug1')
 	}
 
 	async submit() {
@@ -59,13 +63,11 @@ export default class JoinClass {
 			frm.append(i, data[i])
 		}
 
-		const f = await fetch('http://localhost/a/submit', { method: 'POST', body: frm })
+		const f = await fetch('/a/submit', { method: 'POST', body: frm })
 		const j = await f.json()
 		if(j && j.error === false && j.data && j.data.error === false){
-
-			__report('TODO: Criar o modal/página para a verificação e com o link criado.', 'warn')
 			__glass(false)
-			return __report('Thank you for your registration!<br>Your link is:<br><b>' + j.data.link + '</b>', 'info')
+			this.pageCode(j.data)
 		}
 		__glass(false)
 		__report(j.data.msg)
@@ -140,7 +142,7 @@ export default class JoinClass {
 	}
 
 	async getCountries(){
-		const f = await fetch('http://localhost/a/countries')
+		const f = await fetch('/a/countries')
 		const j = await f.json()
 	
 		if(j && j.error == false && j.data){
@@ -166,6 +168,82 @@ export default class JoinClass {
 				c.dataset.id = ""
 			}
 		}
+	}
+
+	pageCode(data: any) {
+		// debug
+		//const data = {link: 'http://fd2e.com/Fgr3'}
+		__('main .container').innerHTML = ''
+
+		const h1 = __c('h1', {}, 'Thank you for registering!')
+		const p1 = __c('p', {}, 'Your personal sharing link is: <b>' + data.link + ' </b>')
+		const p2 = __c('p', {}, '-- Share it all over the planet!')
+		const p3 = __c('p', {}, 'We have sent a verification code to your email.<br>Enter the code below:')
+
+		const ip = __c('input', {id: 'verify-code', placeholder: '999999'})
+		const bt = __c('button', {}, 'Verify')
+		const ci = __c('div', { class: "code" })
+		ci.append(ip, bt)
+
+		const jv = __c('div', { class: "join-verify" })
+		jv.append(h1, p1, p2, p3, ci)
+		 __('.container').append(jv)
+
+		__e(() => this.verify(), bt)
+	}
+
+	verify() {
+		this.pageLogin()
+	}
+
+	pageLogin(){
+		__('main .container').innerHTML = ''
+
+		const h1 = __c('h1', {}, 'Verified successfully!')
+		const h2 = __c('h2', {}, 'Sign in now!')
+
+		// form login
+		const e = __c('div', { class: "input" }, __c('label', {}, 'E-mail'))
+		e.append(__c('input', { type: "email", id: "sgn-email", placeholder: "E-mail" }))
+
+		const p = __c('div', { class: "input" }, __c('label', {}, 'Password'))
+		p.append(__c('input', { type: "password", id: "sgn-password", placeholder: "Password" }))
+
+		const button = __c('button', { id: "sgn-btn-login" }, 'Login')
+		__e(() => this.login(), button)
+
+		const f = __c('div', { class: "form" })
+		f.append(e, p, button)
+
+		const jv = __c('div', { class: "join-verify", id: "join-verify" })
+		jv.append(h1, h2, f)
+		__('.container').append(jv)	
+	}
+
+	async login() {
+		// @ts-ignore
+		const email = __('#sgn-email').value ?? ''
+		//@ts-ignore
+		const password = __('#sgn-password').value ?? ''
+
+		if (email == '' || password == '') return __report('Please, fill all fields')
+		const frm = new FormData()
+		frm.append('email', email)
+		frm.append('password', password)
+
+		const f = await fetch('/login', {
+			method: 'POST',
+			body: frm
+		})
+
+		if (f.status != 200) return __report('Login failed!')
+		const res = await f.json()
+		if (res && res.data) {
+			if (res.data.id && res.data.name) {
+				location.href = '/profile'
+			}
+		}
+		return __report('Login failed!')
 	}
 
 

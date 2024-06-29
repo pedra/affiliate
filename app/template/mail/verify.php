@@ -8,7 +8,7 @@ $body = '<table style="width:600px;padding:32px;font-family:sans-serif;">'.
 	'<tr><td>You have successfully registered as an <b>Affiliate</b>.</td></tr>'.
 	'<tr><td style="padding:0 0 16px 0">This is your verification code: </td></tr>' .
 	'<tr><td style="padding:16px 0;text-align:center;font-size:32px;color:#468;letter-spacing:16px"><span style="padding: 16px 32px;border:2px solid #468;background:#def">'.$vkey.'</span></td></tr>'.
-	'<tr><td style="padding:16px 0 16px 0">Copy and paste into the registration page or click on the link:</td></tr>'.
+	'<tr><td style="padding:16px 0 16px 0">Copy and paste into the registration page:</td></tr>'.
 	'<tr><td style="text-align:center;font-size:22px"><b><a href="'.$link.'">' . $link . '</a></b></td><tr>'.
 	'<tr><td style="padding:16px">&nbsp;</td></tr>'.
 	'<tr><td>Thanks,</td></tr>'.

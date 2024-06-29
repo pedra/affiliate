@@ -1,6 +1,7 @@
 import HomeClass from "@scripts/page/home"
 import ProfileClass from '@scripts/page/profile';
 import JoinClass from '@scripts/page/join'
+import CheckClass from '@scripts/page/check'
 
 const App = new class AppClass {
 
@@ -16,6 +17,7 @@ const App = new class AppClass {
 		this.pages.push({ name: 'Home', path: '/', view: new HomeClass() })
 		this.pages.push({ name: 'Profile', path: '/profile', view: new ProfileClass() })
 		this.pages.push({ name: 'Join', path: '/join', view: new JoinClass() })
+		this.pages.push({ name: 'Check', path: '/check', view: new CheckClass() })
 		this.router()
 	}
 
@@ -32,7 +34,7 @@ const App = new class AppClass {
 
 		console.log(`App::router started!\nPath: ${this.path}\nPage: ${this.page}`)
 		// Service Worker install
-		'serviceWorker' in navigator && navigator.serviceWorker.register('/sw.js')
+		//'serviceWorker' in navigator && navigator.serviceWorker.register('/sw.js')
 	}
 }
 
@@ -42,7 +44,7 @@ document.addEventListener("astro:page-load", () => {
 	console.log('APP START ✨')
 
 	// Service Worker install
-	'serviceWorker' in navigator && navigator.serviceWorker.register('/sw.js')
+	//'serviceWorker' in navigator && navigator.serviceWorker.register('/sw.js')
 })
 
 

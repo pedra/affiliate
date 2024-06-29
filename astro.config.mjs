@@ -5,11 +5,12 @@ export default defineConfig({
 	outDir: './app/public',
 	vite: {
 		build: {
+			inlineStylesheets: 'never',
 			rollupOptions: {
 				output: {
-					entryFileNames: 'js/script.js',
+					entryFileNames: 'js/[name].js',
 					chunkFileNames: 'chunks/chunk.[hash].mjs',
-					assetFileNames: 'assets/asset.[hash][extname]',
+					assetFileNames: 'css/[name][extname]',
 				},
 			},
 		},

@@ -57,10 +57,10 @@ textarea {
 
 html,
 body {
-    height: 100%;
     background-size: cover;
     background: var(--bg);
     color: var(--text);	
+	font-weight: 500;
 	/* scrollbar-gutter: stable; */
 }
 
