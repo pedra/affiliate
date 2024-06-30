@@ -6,8 +6,8 @@ import Layout from "../layouts/ProfileLayout.astro";
   <header>
     <div class="container">
       <div class="user">
-        <img src="/img/u/1.jpg" alt="user" />
-        <h1>Ashley Elizabeth Johnson</h1>
+        <img src="/img/logo2.png" alt="user" />
+        <h1>[[name]]</h1>
       </div>
       <div class="menu">
         <span class="material-symbols-outlined">menu</span>
@@ -18,92 +18,7 @@ import Layout from "../layouts/ProfileLayout.astro";
   <main>
     <div class="container">
       <h2>Affiliates</h2>
-      <div class="pro-card">
-        <div class="pro-card-header">
-          <h2>Ashley Elizabeth Johnson</h2>
-          <div class="code"><label>Code:</label>aXes9</div>
-        </div>
-        <div class="pro-card-content">
-          <div class="div">
-            <div class="phone"><label>Phone:</label>+55 21995674969</div>
-            <div class="email">
-              <label>Email:</label>paulo.rocha@outlook.com
-            </div>
-          </div>
-          <div class="div">
-            <div class="company"><label>Company:</label>Toyota Motor Corporation</div>
-            <div class="country"><label>Country:</label>Brazil</div>
-          </div>
-        </div>
-        <div class="project">
-          <span>around</span><span>learning</span><span>streaming</span><span
-            >store</span
-          ><span>events</span>
-        </div>
-
-        <div class="control">
-          <div>Approved</div><span class="material-symbols-outlined">toggle_on</span>
-        </div>
-      </div>
-
-      <div class="pro-card">
-        <div class="pro-card-header">
-          <h2>Ashley Elizabeth Johnson</h2>
-          <div class="code"><label>Code:</label>aXes9</div>
-        </div>
-        <div class="pro-card-content">
-          <div class="div">
-            <div class="phone"><label>Phone:</label>+55 21995674969</div>
-            <div class="email">
-              <label>Email:</label>paulo.rocha@outlook.com
-            </div>
-          </div>
-          <div class="div">
-            <div class="company">
-              <label>Company:</label>Google LCC - Brazil
-            </div>
-            <div class="country"><label>Country:</label>Brazil</div>
-          </div>
-        </div>
-        <div class="project">
-          <span>around</span><span>learning</span><span>streaming</span>
-        </div>
-        <div class="control">
-          <div>Waiting for verification</div><span
-            class="material-symbols-outlined disabled">toggle_off</span
-          >
-        </div>
-      </div>
-
-      <div class="pro-card">
-        <div class="pro-card-header">
-          <h2>Ashley Elizabeth Johnson</h2>
-          <div class="code"><label>Code:</label>aXes9</div>
-        </div>
-        <div class="pro-card-content">
-          <div class="div">
-            <div class="phone"><label>Phone:</label>+55 21995674969</div>
-            <div class="email">
-              <label>Email:</label>paulo.rocha@outlook.com
-            </div>
-          </div>
-          <div class="div">
-            <div class="company">
-              <label>Company:</label>Samsung Electronics Co.
-            </div>
-            <div class="country"><label>Country:</label>Brazil</div>
-          </div>
-        </div>
-        <div class="project">
-          <span>around</span><span>learning</span><span>streaming</span><span
-            >store</span
-          ><span>events</span>
-        </div>
-
-        <div class="control">
-          <div>Disapproved</div><span class="material-symbols-outlined off">toggle_off</span>
-        </div>
-      </div>
+	  <div class="pro-cards" id="pro-cards">[[procards]]</div>
     </div>
   </main>
 </Layout>

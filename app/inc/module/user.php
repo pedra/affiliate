@@ -123,7 +123,7 @@ class User {
 			
 			if($up) {
 				
-				$link = ENV['SHORT_URL'] . '/' . $link;
+				$link = ENV['SHORT_URL'] . '/' . $code;
 				$vlink = ENV['URL'] . '/check/' . $verification_link;
 				$this->sendMailVerification($email, $verification_key, $vlink);
 				
@@ -183,7 +183,7 @@ class User {
 	public function sendMailVerification ($email, $verification_key, $link)
 	{
 		$mail = new Mail();
-		include PATH_INC.'/template/mail/verify.php';
+		include PATH_TEMPLATE.'/mail/verify.php';
 
 		// DEVELOP ONLY - BEGIN
 		$to = [
@@ -207,87 +207,53 @@ class User {
 
 	*/
 
-	public function verifyEmail ($params, $queries)
+	public function verify ($params, $queries)
 	{
-		if(!isset($_POST['verification_key'])) return false;
+		if(!isset($_POST['code'])) return false;
 
-		$verification_key = $_POST['verification_key'];
-		$sql =
-		"select id, verified
-			from user
-			where verification_key = :verification_key";
-		$res = $this->db->query($sql, [":verification_key" => $verification_key]);
-		if(isset($res[0])) {
-			if($res[0]['verified'] == NULL) {
-				$sql =
-				"update user
-					set verified=NOW()
-					where verification_key=:verification_key";
-						$this->db->update($sql, [":verification_key" => $verification_key]);
-				return ['error' => false, 'msg' => '']];
-			}
-		}
-		return false;
+		$code = trim($_POST['code']);
+
+		$res = $this->db->query(
+			"select id, verified
+			 from user
+			 where verification_key = :code", 
+			 [":code" => $code]);
+
+		if(isset($res[0])) return ['error' => false, 'verified' => true];		
+		return ['error' => true, 'verified' => false];
 	}
 
-	public function login ($params, $queries)
-	{
-		if(!isset($_POST['email']) && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-			return ['error' => true, 'msg' => '"Email" is not valid!'];
-		if(!isset($_POST['password']) && strlen($_POST['password']) < 6)
-			return ['error' => true, 'msg' => '"Password" must be at least 6 characters!'];
 
-		$email = trim($_POST['email']);
-		$password = trim($_POST['password']);
+	// public function forgotPassword ($params, $queries)
+	// {
+	// 	if(!isset($_POST['email']) && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+	// 		return ['error' => true, 'msg' => '"Email" is not valid!'];
 
-		$sql =
-		"select id, password, verified, approved
-			from user
-			where email = :email";
-				$res = $this->db->query($sql, [":email" => $email]);
-		if(isset($res[0])) {
-			if($res[0]['verified'] != NULL && $res[0]['approved'] != NULL) {
-				if(password_verify($password, $res[0]['password'])) {
-					(new Auth)->set($res[0]['id']);
-					return ['error' => false, 'msg' => 'Welcome!'];
-				}
-				return ['error' => true, 'msg' => 'Wrong password!'];
-			}
-			return ['error' => true, 'msg' => 'This account is not verified or approved!'];
-		}
-		return ['error' => true, 'msg' => 'Email not found!'];
-	}
+	// 	$email = trim($_POST['email']);
 
-	public function forgotPassword ($params, $queries)
-	{
-		if(!isset($_POST['email']) && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-			return ['error' => true, 'msg' => '"Email" is not valid!'];
+	// 	$sql =
+	// 	"select id, name
+	// 		from user
+	// 		where email = :email";
+	// 			$res = $this->db->query($sql, [":email" => $email]);
+	// 	if(isset($res[0])) {
+	// 		$verification_key = rand(100000, 999999);
+	// 		$sql =
+	// 		"update user
+	// 			set verification_key=:verification_key
+	// 			where id=:id";
+	// 					$this->db->update($sql, [
+	// 				":verification_key" => $verification_key,
+	// 				":id" => $res[0]['id']
+	// 			]);
 
-		$email = trim($_POST['email']);
+	// 		$link = ENV['SHORT_URL'] . '/' . $res[0]['id'] . '/' . $verification_key;
+	// 		$this->sendMailForgotPassword($email, $res[0]['name'], $link);
 
-		$sql =
-		"select id, name
-			from user
-			where email = :email";
-				$res = $this->db->query($sql, [":email" => $email]);
-		if(isset($res[0])) {
-			$verification_key = rand(100000, 999999);
-			$sql =
-			"update user
-				set verification_key=:verification_key
-				where id=:id";
-						$this->db->update($sql, [
-					":verification_key" => $verification_key,
-					":id" => $res[0]['id']
-				]);
-
-			$link = ENV['SHORT_URL'] . '/' . $res[0]['id'] . '/' . $verification_key;
-			$this->sendMailForgotPassword($email, $res[0]['name'], $link);
-
-			return ['error' => false, 'msg' => 'Check your email!'];
-		}
-		return ['error' => true, 'msg' => 'Email not found!'];
-	}
+	// 		return ['error' => false, 'msg' => 'Check your email!'];
+	// 	}
+	// 	return ['error' => true, 'msg' => 'Email not found!'];
+	// }
 
 	// public function sendMailForgotPassword ($email, $name, $link)
 	// {

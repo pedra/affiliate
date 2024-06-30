@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync, existsSync, rmdirSync } from 'node:fs'
 
 const PUBLIC_DIR = "app/public"
 const TEMPLATE_DIR = "app/template/page"
-const PAGES = ['join', 'profile', 'check', 'typecode', 'verified']
+const PAGES = ['join', 'profile', 'check', 'page404', 'typecode', 'verified']
 
 /*
 	1 - Search for "PAGES" in PUBLIC_DIR

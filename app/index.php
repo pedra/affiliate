@@ -17,6 +17,7 @@ if ($_SERVER['HTTP_HOST'] == 'fd2e.com') {
 	
 	// Check the link sent to the email in the affiliate registration.
 	->get('/check/(.*)', '\Module\Page\Page', 'check')
+	->get('/check', '\Module\Page\Page', 'goToHome')
 
 	// DEBUG
 	->get('/verified', '\Module\Page\Join', 'verified')
@@ -43,5 +44,5 @@ if ($_SERVER['HTTP_HOST'] == 'fd2e.com') {
 	->get('/c/(.*)', '\Module\Page\Join', 'index')
 	
 	// Show "home" page if no route is found
-	->get('(.*)', '\Module\Page\Page', 'home')
+	->get('(.*)', '\Module\Page\Page', 'notFound')
 	->run();

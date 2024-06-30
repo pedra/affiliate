@@ -107,6 +107,7 @@ function goToUrl($url)
 function goTo404() {
 	header('HTTP/1.1 404 Not Found');
 	header('Status: 404 Not Found');
+	include_once PATH_TEMPLATE . '/page/page404.php';
 	exit();
 }
 

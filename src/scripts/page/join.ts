@@ -63,14 +63,22 @@ export default class JoinClass {
 			frm.append(i, data[i])
 		}
 
-		const f = await fetch('/a/submit', { method: 'POST', body: frm })
-		const j = await f.json()
-		if(j && j.error === false && j.data && j.data.error === false){
-			__glass(false)
-			this.pageCode(j.data)
-		}
+		try{
+			const f = await fetch('/a/submit', { method: 'POST', body: frm })
+			const j = await f.json()
+			if(j && j.error === false && j.data && j.data.error === false){
+				__glass(false)
+				return this.pageCode(j.data)
+			}
+
+			if(j && j.data && j.data.msg) {
+				__glass(false)
+				__report(j.data.msg)
+			}
+
+		}catch(e){}
+
 		__glass(false)
-		__report(j.data.msg)
 		__report('Please try again later.', 'info')
 
 	}
@@ -142,16 +150,17 @@ export default class JoinClass {
 	}
 
 	async getCountries(){
-		const f = await fetch('/a/countries')
-		const j = await f.json()
-	
-		if(j && j.error == false && j.data){
-			this.countries = j.data
-			return true
-		}
+		try{
+			const f = await fetch('/a/countries')
+			const j = await f.json()
+		
+			if(j && j.error == false && j.data){
+				this.countries = j.data
+				return true
+			}
+		} catch(e){}
 		return false
 	}
-
 
 	async observeCountry() {
 		__('#form-country').onchange = (e: any) => {
@@ -171,8 +180,6 @@ export default class JoinClass {
 	}
 
 	pageCode(data: any) {
-		// debug
-		//const data = {link: 'http://fd2e.com/Fgr3'}
 		__('main .container').innerHTML = ''
 
 		const h1 = __c('h1', {}, 'Thank you for registering!')
@@ -192,11 +199,40 @@ export default class JoinClass {
 		__e(() => this.verify(), bt)
 	}
 
-	verify() {
-		this.pageLogin()
+	async verify() {
+
+		const code = __('#verify-code').value ?? ''
+
+		const frm = new FormData()
+		frm.append('code', code)
+
+		__glass()
+		try{
+			const f = await fetch('/a/verify', {
+				method: 'POST',
+				body: frm
+			})
+
+			if (f.status != 200) {
+				__glass(false)
+				return __report('Verification failed!<br>Try again.')
+			}
+
+			const j = await f.json()
+			if(	j && 
+				j.error == false && 
+				j.data && 
+				j.data.verified == true ){
+				__glass(false)
+				return this.pageLogin(code)
+			}
+		} catch(e){}
+
+		__glass(false)
+		__report('Invalid code!<br>Try again...')
 	}
 
-	pageLogin(){
+	pageLogin(code:string){
 		__('main .container').innerHTML = ''
 
 		const h1 = __c('h1', {}, 'Verified successfully!')
@@ -210,7 +246,7 @@ export default class JoinClass {
 		p.append(__c('input', { type: "password", id: "sgn-password", placeholder: "Password" }))
 
 		const button = __c('button', { id: "sgn-btn-login" }, 'Login')
-		__e(() => this.login(), button)
+		__e(() => this.login(code), button)
 
 		const f = __c('div', { class: "form" })
 		f.append(e, p, button)
@@ -220,31 +256,36 @@ export default class JoinClass {
 		__('.container').append(jv)	
 	}
 
-	async login() {
-		// @ts-ignore
+	async login(code:string) {
+
 		const email = __('#sgn-email').value ?? ''
-		//@ts-ignore
 		const password = __('#sgn-password').value ?? ''
 
 		if (email == '' || password == '') return __report('Please, fill all fields')
 		const frm = new FormData()
 		frm.append('email', email)
 		frm.append('password', password)
+		frm.append('verification_key', code)
 
-		const f = await fetch('/login', {
-			method: 'POST',
-			body: frm
-		})
+		__glass()
+		try{
+			const f = await fetch('/login', {
+				method: 'POST',
+				body: frm
+			})
 
-		if (f.status != 200) return __report('Login failed!')
-		const res = await f.json()
-		if (res && res.data) {
-			if (res.data.id && res.data.name) {
+			if (f.status != 200) {
+				__glass(false)
+				return __report('Login failed!')
+			}
+
+			const res = await f.json()
+			if (res && res.data && res.data.id && res.data.name) {
 				location.href = '/profile'
 			}
-		}
+		} catch(e){}
+
+		__glass(false)
 		return __report('Login failed!')
 	}
-
-
 }

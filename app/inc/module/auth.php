@@ -12,96 +12,86 @@ class Auth {
 		$this->db = new Mysql();
 	}
 
-	public function check ()
-	{
-		if (!isset($_SESSION['user'])) goTo404();
+	public function check ($action = false)
+	{		
+		if (!isset($_SESSION['user'])) {
+			if($action !== false) return $action();
+			goTo404();
+		}
 
 		$id = 0 + $_SESSION['user'];
 
 		$res = $this->db->query(
-			" select id from user where id = :id",
+			"select id, name from user where id = :id",
 			[":id" => $id]
 		);
-		if (!isset($res[0])) goTo404();
 
-		return $id;
+		if (!isset($res[0])) {
+			if ($action !== false) return $action();
+			goTo404();
+		}
+
+		return $res[0];
 	}
 
-	public function register ($params, $queries)
-	{
-		if(!isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['password']))
-			return false;
-
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$password = password_hash(trim($_POST['password']), PASSWORD_DEFAULT);
-		$secpass = secured_encrypt(trim($_POST['password']));
-
-		$sql = "
-			insert into user
-			(name, email, secpass, password)
-			values
-			(:name, :email, :secpass, :password)
-		";
-		$res = $this->db->query($sql, [
-			":name" => $name, 
-			":email" => $email,
-			":secpass" => $secpass,
-			":password" => $password
-		]);
-		return $res;
-	}
-
+	// Login and Verify from email link
 	public function login ($params, $queries)
 	{
-		if(!isset($_POST['email']) || !isset($_POST['password']))
-			return false;
+		if(
+			!isset($_POST['email']) || 
+			!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) || 
+			!isset($_POST['password'])) return false;
+			
+			$email = $_POST['email'];
+			$password = trim($_POST['password']);
 
-		$email = $_POST['email'];
-		$password = trim($_POST['password']);
-
-		$sql = "
+			$verification_link = $_POST['verification_link'] ?? false; // vem do link (get)
+			$verification_key = $_POST['verification_key'] ?? false; // vem do cadastro em Join
+			$is_verify = $verification_link !== false || $verification_key !== false;
+			
+			$sql = "
 			select id, name, password
 			from user
 			where email = :email 
-			and verified is not null
-			#and approved is not null";
-		$res = $this->db->query($sql, [":email" => $email]);
-		if(isset($res[0]) && password_verify($password, $res[0]['password'])) {
+			#and approved is not null
+			and verified is " . ($is_verify ? "null" : "not null");
+			
+			$data = [":email" => $email];
+			if ($verification_link !== false) {
+				$data[":check"] = $verification_link;
+				$sql .= " and verification_link=:check";
+			}
+			if ($verification_key !== false) {
+				$data[":check"] = $verification_key;
+				$sql .= " and verification_key=:check";
+			}
+			
+			$res = $this->db->query($sql, $data);
+			if (isset($res[0]) && 
+				password_verify($password, $res[0]['password'])) {
+				
+				if($is_verify) {
+					$up = $this->db->update(
+						"update user 
+						set verified = now(), 
+						verification_key = null, 
+						verification_link = null 
+						where id = :id", 
+						[":id" => $res[0]['id']]
+					);
+					if (!$up) return false;
+					
+					// TODO: Quando existir uma tabela de pré-cadastro de usuário, 
+					//	nesse ponto criamos uma entrada na tabela USER, copiamos
+					//	os dados e apagamos essa linha da tabela USER_TEMP
+					//	-- Lembrando de rodar um "cron" para limpar entradas antigas,
+					//	cadastros perdidos ou esquecidos a mais de 24 horas.
+				}
+					
 			$user = ["name" => $res[0]["name"], "id" => $res[0]["id"]];
 			$_SESSION['user'] = $user["id"];
 			return $user;
 		}
 		return false;
 	}
-
-	public function test ($params, $queries)
-	{
-		$sql = 
-		"select 
-			u.id uid,
-			u.name name,
-			u.email email,
-			u.verified verified,
-			u.approved approved,
-			u.code code,
-			u.verification_key verification_key,
-			u.phone phone, 
-			u.company company,
-			u.project project,
-			c.name as country_name,
-			c.iso3 country_sigla,
-			c.native native,
-			c.phonecode phonecode,
-			c.emojiU emojiU,
-			c.emoji emoji
-		
-		from user u
-		left join country c on u.country = c.id";
-
-		$res = $this->db->query($sql);
-
-		e($res, true);
-	}
-
 }

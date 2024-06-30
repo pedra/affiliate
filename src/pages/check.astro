@@ -8,6 +8,7 @@ import Layout from "../layouts/JoinLayout.astro";
       <div class="join-verify">
         <h1>Verified successfully!</h1><h2>Sign in now!</h2>
         <div class="form">
+			<input type="hidden" id="sgn-code" value="[[code]]">
           <div class="input">
             <label>E-mail</label><input
               type="email"
