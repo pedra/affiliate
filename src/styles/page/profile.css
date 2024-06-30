@@ -2,13 +2,14 @@
 ----------------------------------------------------------------------------- */
 header {
 	width: 100%;
+	padding: 0 1rem;
 	background: #def;
 	box-shadow: 0 3px 30px rgba(0,0,0,0.2);
 }
 
 header .container {
 	max-width: 998px;
-	padding: 0.5rem;
+	padding: .5rem;
 }
 
 header .user {
