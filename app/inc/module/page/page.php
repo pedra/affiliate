@@ -24,19 +24,7 @@ class Page {
 		$user = (new Auth)->check();
 		$id = $user['id'];
 		$name = $user['name'];
-
-		$procards = ''; //"<table><tr>
-			// <th>Name</th>
-			// <th>Code</th>
-			// <th>Phone</th>
-			// <th>Email</th>
-			// <th>Company</th>
-			// <th>Country</th>
-			// <th>Projects</th>
-			// <th>Verified</th>
-			// <th>Approved</th>
-			// <td>Password<th>
-			// </tr>";
+		$aftTable = "No Affiliates founded!";
 
 		$res = $this->db->query(
 			"select 
@@ -56,7 +44,9 @@ class Page {
 			from user u
 			left join country c on c.id = u.country");
 
-		if(isset($res[0])) {
+		if(isset($res[0])) {			
+			$aftTable = "<table><tr><th>Name</th><th>Code</th><th>Status</th><th>Action</th></tr>";
+
 			foreach ($res as $key => $value) {
 				$password = secured_decrypt($value['secpass']);				
 
@@ -75,45 +65,35 @@ class Page {
 					$apvToggle = 'off';
 					$apvClass = 'disabled';
 					$apvStatus = '0';
-					$apvText = 'Waiting for verification';
-				}	
+					$apvText = 'Unverified';
+				}
 
-
-
-				//$procards .= "{$value} - ";
-
-			$procards .= "
-				<div class=\"pro-card\">
-					<div class=\"pro-card-header\">
-						<h2>{$value['name']}</h2>
-						<div class=\"code\"><label>Code:</label>{$value['code']}</div>
-					</div>
-					<div class=\"pro-card-content\">
-						<div class=\"div\">
-							<div class=\"phone\"><label>Phone:</label>{$value['phonecode']} {$value['phone']}</div>
-							<div class=\"email\">
-								<label>Email:</label>{$value['email']}
-							</div>
-						</div>
-						<div class=\"div\">
-							<div class=\"company\"><label>Company:</label>{$value['company']}</div>
-							<div class=\"country\"><label>Country:</label>{$value['country']}</div>
-							<div class=\"phone\"><label>Password:</label>$password</div>
-						</div>
-					</div>
-
-					<div class=\"project\">$pjt</div>
-
+				$aftTable .= "<tr>
+            	<td>{$value['name']}</td>
+            	<td>{$value['code']}</td>
+            	<td>
 					<div class=\"control\">
 						<div>$apvText</div>
-							<span class=\"material-symbols-outlined $apvClass\" data-status=\"$apvStatus\">toggle_$apvToggle</span>
+						<span class=\"material-symbols-outlined $apvClass\" data-status=\"$apvStatus\">toggle_$apvToggle</span>
 					</div>
-				</div>";
-				
-			// }	
-
-			//$procards .= "</table>";
+				</td>
+            	<td><span class=\"material-symbols-outlined aft-plus\">add</span></td>
+				<tr class=\"data\">
+					<td colspan=\"4\">
+						<div class=\"data-content\">
+							<div class=\"top\">
+								<div><label>Phone:</label>{$value['phonecode']} {$value['phone']}</div>
+								<div><label>Email:</label>{$value['email']}</div>
+								<div><label>Company:</label>{$value['company']}</div>
+								<div><label>Country:</label>{$value['country']}</div>
+								<div><label>Password:</label>$password</div>
+							</div>				
+							<div class=\"project\">$pjt</div>
+						</div>
+					</td>
+				</tr>";
 			}
+			$aftTable .= "</table>";
 		}
 	
 		include_once PATH_TEMPLATE . '/page/profile.php';
@@ -165,4 +145,76 @@ class Page {
 		goToHome();
 		exit();
 	}
+
+
+	/*
+
+	 		RASCUNHO
+
+
+							//$procards .= "{$value} - ";
+
+			
+				$procards .= "
+				<div class=\"pro-card\">
+					<div class=\"pro-card-header\">
+						<h2>{$value['name']}</h2>
+						<div class=\"code\"><label>Code:</label>{$value['code']}</div>
+					</div>
+					<div class=\"pro-card-content\">
+						<div class=\"div\">
+							<div class=\"phone\"><label>Phone:</label>{$value['phonecode']} {$value['phone']}</div>
+							<div class=\"email\">
+								<label>Email:</label>{$value['email']}
+							</div>
+						</div>
+						<div class=\"div\">
+							<div class=\"company\"><label>Company:</label>{$value['company']}</div>
+							<div class=\"country\"><label>Country:</label>{$value['country']}</div>
+							<div class=\"phone\"><label>Password:</label>$password</div>
+						</div>
+					</div>
+
+					<div class=\"project\">$pjt</div>
+
+					<div class=\"control\">
+						<div>$apvText</div>
+							<span class=\"material-symbols-outlined $apvClass\" data-status=\"$apvStatus\">toggle_$apvToggle</span>
+					</div>
+				</div>";
+				
+
+				<tr>
+            	<td>Bill Rocha da Silva dos Santos</td>
+            	<td>aXz45</td>
+            	<td>
+					<div class="control">
+						<div>Waiting for verification</div>
+						<span class="material-symbols-outlined $apvClass" data-status="on">toggle_on</span>
+					</div>
+				</td>
+            	<td><span class="material-symbols-outlined aft-plus" onclick="test(this)"">add</span></td>
+        	<tr class="data">
+              	<td colspan="4">
+					<div class="data-content">
+						<div class="top">
+							<div><label>Phone:</label>61 999999999</div>
+							<div><label>Email:</label>kirk@email.com</div>
+							<div><label>Company:</label>Microsoft Corp.</div>
+							<div><label>Country:</label>Australia</div>
+							<div><label>Password:</label>123456</div>
+						</div>				
+						<div class="project">
+							<span>around</span>
+							<span>events</span>
+							<span>store</span>
+							<span>learning</span>
+							<span>streaming</span>
+						</div>
+					</div>
+			  	</td>
+          	</tr>
+
+
+	*/
 }

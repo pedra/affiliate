@@ -1,15 +1,3 @@
-
-body {
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-    justify-content: flex-start;
-
-	font-weight: 500;
-	overflow: auto;
-}
-
 /* HEADER
 ----------------------------------------------------------------------------- */
 header {
@@ -19,13 +7,8 @@ header {
 }
 
 header .container {
-	margin: 0 auto;
-	width: 100%;
-	max-width: 600px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 0.5rem 1rem;
+	max-width: 998px;
+	padding: 0.5rem;
 }
 
 header .user {
@@ -48,130 +31,216 @@ header .user img {
 }
 
 header .menu {
-	opacity: 0.3;
+	opacity: 0.4;
+	cursor: not-allowed;
 }
 
 /* MAIN
 ----------------------------------------------------------------------------- */
 main {
-	display: flex;
-	padding: 1rem;
-	position: relative;
-	z-index: 100;
-	flex: 1;
 	width: 100%;
 }
-
 main .container {
-	margin: 0 auto;
-	width: 100%;
-	max-width: 600px;
-	border-radius: var(--radius-1);
+	max-width: 998px;
 }
 
-/* AFFILIATES CARDS
+
+/* TOP-BAR TOOLS
 ------------------------------------------------------------------------------*/
-.pro-card {
-	padding: 1rem;
+.aft-top-bar,
+.aft-tools,
+.aft-search  {
+	display: flex;
+	align-items: center;
+}
+
+.aft-top-bar {
+	justify-content: space-between;
+	padding: 1rem 0.5rem;
+}
+
+.aft-top-bar h1 {
+	font-size: 3rem;
+}
+
+.aft-top-bar input,
+.aft-top-bar button {
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    color: var(--text);
+    min-height: 0;
+    min-width: 0;
+    margin: 0 !important;
+    border-radius: var(--radius-2) !important;
+}
+.aft-top-bar input {
+	padding-right: 2.1rem !important;
+}
+
+.aft-tools {
+	gap: 1rem;
+	cursor: not-allowed;
+}
+
+.aft-tools * {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.aft-search {
+
+}
+
+.aft-search button {
+	margin: 4px 0 0 -2rem !important;
+}
+
+/* AFFILIATES TABLE LIST
+------------------------------------------------------------------------------*/
+.aft-table {
 	margin: 1rem 0;
-	background: var(--white);
-	box-shadow: 0 2px 14px rgba(0,0,0,0.3);
-	border-radius: var(--radius-1);
 }
 
-.pro-card label {
-	padding: 0;
-	margin: 0 0.3rem 0 0;
-	font-weight: 300;
-	font-size: 1rem;
-	display: inline-block;
+.aft-table table {
+	width: 100%;
+	/* min-width: 400px; */
+	border-collapse: collapse;
 }
 
-.pro-card-header {
+.aft-table td,
+.aft-table th {
+	padding: 0.2rem 0.5rem;
+	text-align: center;
+	border-bottom: 1px solid #aaa;
+	text-wrap: nowrap;
+}
+
+.aft-table td:first-child,
+.aft-table th:first-child {
+	text-align: start;
+	width: 100%;
+}
+.aft-table th:nth-child(3),
+.aft-table td:nth-child(3) {
+	text-align: start;
+}
+
+.aft-table td:last-child,
+.aft-table th:last-child {
+	width: 30px;
+	/* cursor: pointer; */
+}
+
+.aft-table .aft-plus {
+	cursor: pointer;
+}
+
+/* CONTROL ----------------------------- begin */
+.aft-table .control {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	font-weight: 700;
+	gap: 0.5rem;
+	color: green;
 }
 
-.pro-card-header h2 {
-	font-size: 1.2rem;
+.aft-table .control span {
+	font-size: 2rem;
+	cursor: pointer;
 }
 
-.pro-card-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    font-weight: 700;
-	padding: 0.2rem 0;
+.aft-table .control span.off,
+.aft-table .control:has(.off) {
+	color: red;
+	opacity: 0.6;
 }
 
-.pro-card-content .div {
+.aft-table .control span.disabled,
+.aft-table .control:has(.disabled) {
+	color: #bbb;
+	cursor:not-allowed
+}
+
+/* CONTROL ----------------------------- end  */
+
+.aft-table .data {
+}
+
+.aft-table .data td {
+	box-shadow: none;
+	border: none;
+	border-radius: var(--radius-1);
+}
+
+.aft-table .data.on td {
+	box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.aft-table .data-content {
+	position: relative;
+	z-index: -200;
+	opacity: 0;
+    height: 0px;
+	padding: 0;
+	background: transparent;
+	transition: all 0.6s, height 0.1s, opacity 0.3s;
+	transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.aft-table .data.on .data-content {
+	transform: none;
+	height: auto;	
+	padding: 1rem 0.5rem 0 0.5rem;
+	opacity: 1;
+}
+
+.aft-table .data-content .top {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 0 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.pro-card-content .div div {
-	padding: 0.2rem 0;
-    display: flex;
-	gap: 1rem;
-	min-width: calc(50% - 0.5rem);
+.aft-table .data-content .top div{
+	text-wrap:balance;
 }
 
-.pro-card .project {
+.aft-table .data-content div {
+	font-weight: 600;
+}
+
+.aft-table .data-content div label {
+	padding: 0;
+	margin:0;
+	font-weight: 400;
+}
+
+/* PROJECT ----------------------------- begin */
+.aft-table .data .project {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 0.3rem;
-	padding: 0.5rem 0;
+	gap: 0.5rem;
+	justify-content: center;
+	margin: 0.5rem 0;
 }
-
-.pro-card .project span {
+.aft-table .data .project span {
 	background: #def;
-	padding: 2px 0.5rem;
+	padding: 3px 1rem;
 	border-radius: var(--radius-2);
 
 	background: #479;
 	color: #fff;
 }
+/* PROJECT ----------------------------- end  */
 
-/* CONTROL */
-.pro-card .control {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	background: #def;
-	color: #999;
-	margin: 0.5rem -1rem -1rem -1rem;
-	padding: 0 1rem;
-}
-
-.pro-card .control span {
-	font-size: 2rem;
-	margin: 0 0 0 1rem;
-	color: green;
-	cursor: pointer;
-}
-
-.pro-card .control span.off {
-	color: red;
-	opacity: 0.6;
-}
-
-.pro-card .control span.disabled {
-	color: #ccc;
-	cursor:not-allowed
-}
-
-/* FOOTER
------------------------------------------------------------------------------ */
-footer {
-	background: #def;
-    width: 100%;
-}
-
-footer .container {
-    display: flex;
-    align-items: center;    
-    justify-content: center;
-	padding: 0 1rem;
+.aft-plus,
+.control span {
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
 }

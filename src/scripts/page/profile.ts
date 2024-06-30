@@ -19,7 +19,17 @@ export default class ProfileClass {
 				(e: any) => {
 					const res = __toggleStatus(e, this.state)
 					console.log("ToggleStatus", res)
-				}
-		)
+				})
+		
+		__('.aft-plus', true).forEach((a: any) => a.onclick = (e: any) => {
+			const t = e.currentTarget.parentElement.parentElement.nextSibling
+			let c = t.classList.contains('on') ? false : true
+			__('.data', true).forEach((d: any) => {
+				d.classList.remove('on')
+				d.previousElementSibling.querySelector('.aft-plus').innerHTML = 'add'
+			})
+			t.classList[c ? 'add' : 'remove']('on')
+			e.currentTarget.innerHTML = c ? 'remove' : 'add'
+		})
 	}
 }
