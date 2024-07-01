@@ -14,13 +14,25 @@
 	font-size: 3rem;
 }
 
+.profile p {
+    margin: 1rem;
+}
+
 /* PROJECTS
 ------------------------------------------------------------------------------*/
-.projects {}
+.projects {
+    display:  grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.projects .card-project:first-child {
+   grid-column: span 2;
+}
 
 .card-project {
 	padding: 1rem;
-	margin: 1rem 0;
 	background: var(--white);
 	box-shadow: 0 2px 14px rgba(0,0,0,0.3);
 	border-radius: var(--radius-1);
@@ -70,21 +82,30 @@
 ------------------------------------------------------------------------------*/
 .form .frm-input {
 	display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: 1rem;
+}
+
+.form .form-input:first-child {
+	grid-column: span 2;
 }
 
 .form .left,
 .form .right {
 	width: 100%;
 }
+
+.form-input input {
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.5);
+}
+
 .control {
     margin: 2rem 0;
     display: flex;
 	flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: 3rem 1rem;
 }
 
 .control span {
@@ -144,4 +165,13 @@
 .join-verify button {
     min-width: 200px;
     margin: 1rem 0 0 0;
+}
+
+@media screen and (max-width:500px){
+
+    .projects .card-project:first-child,
+	.form .form-input:first-child {
+       grid-column: span 1;
+    }
+
 }

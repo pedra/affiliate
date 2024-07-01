@@ -37,10 +37,6 @@ export default class JoinClass {
 		this.eProjects?.forEach((a: any) => __e((e: any) => __toggleStatus(e, this.state), a))
 		this.observeCountry()
 		__e(()=>this.submit(), this.eSubmit)
-		
-		
-		//debug
-		__e(() => this.pageCode({link: 'fd2e.com/Sfg3'}) ,'#debug1')
 	}
 
 	async submit() {
