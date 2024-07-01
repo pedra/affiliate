@@ -11,13 +11,13 @@ if ($_SERVER['HTTP_HOST'] == 'fd2e.com') {
 // ROUTER ----------------------------------------------------------------------
 (new Lib\Router())
 	// Page
-	->get('/', '\Module\Page\Page', 'home')
-	->get('/profile', '\Module\Page\Page', 'profile')
+	->get('/', '\Module\Page\Home', 'index')
+	->get('/profile', '\Module\Page\Profile', 'index')
 
 	
 	// Check the link sent to the email in the affiliate registration.
-	->get('/check/(.*)', '\Module\Page\Page', 'check')
-	->get('/check', '\Module\Page\Page', 'goToHome')
+	->get('/v/(.*)', '\Module\Page\Check', 'index')
+	->get('/v', '\Module\Page\Check', 'goToHome')
 
 	// DEBUG
 	->get('/verified', '\Module\Page\Join', 'verified')
@@ -43,5 +43,5 @@ if ($_SERVER['HTTP_HOST'] == 'fd2e.com') {
 	->get('/c/(.*)', '\Module\Page\Join', 'index')
 	
 	// Show "home" page if no route is found
-	->get('(.*)', '\Module\Page\Page', 'notFound')
+	->get('(.*)', '\Module\Page\Home', 'notFound')
 	->run();

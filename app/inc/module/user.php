@@ -124,7 +124,7 @@ class User {
 			if($up) {
 				
 				$link = ENV['SHORT_URL'] . '/' . $code;
-				$vlink = ENV['URL'] . '/check/' . $verification_link;
+				$vlink = ENV['URL'] . '/v/' . $verification_link;
 				$this->sendMailVerification($email, $verification_key, $vlink);
 				
 				return [

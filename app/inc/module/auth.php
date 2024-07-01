@@ -50,7 +50,7 @@ class Auth {
 			$is_verify = $verification_link !== false || $verification_key !== false;
 			
 			$sql = "
-			select id, name, password
+			select id, name, password, level
 			from user
 			where email = :email 
 			#and approved is not null
@@ -88,10 +88,22 @@ class Auth {
 					//	cadastros perdidos ou esquecidos a mais de 24 horas.
 				}
 					
-			$user = ["name" => $res[0]["name"], "id" => $res[0]["id"]];
+			$user = [
+				"id" => $res[0]["id"],
+				"name" => $res[0]["name"], 
+				"level" => $res[0]["level"]
+			];
 			$_SESSION['user'] = $user["id"];
+			$_SESSION['user_level'] = $user["level"];
+			$_SESSION['user_name'] = $user["name"];
+
 			return $user;
 		}
 		return false;
+	}
+
+	public function logout ()
+	{
+		session_destroy();
 	}
 }

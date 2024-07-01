@@ -1,16 +1,12 @@
 <?php
 
 namespace Module\Page;
-use \Lib\Mysql as Mysql;
-use \Module\Auth as Auth;
 
-class Join {
-
-	private $db = null;
+class Join extends BasePage {
 
 	function __construct()
 	{
-		$this->db = new Mysql();
+		parent::__construct();
 	}
 
 	public function index ($params, $queries)
@@ -44,17 +40,4 @@ class Join {
 		include_once PATH_TEMPLATE . '/page/verified.php';
 		exit;
 	}
-
-	public function countries () {
-		$sql =
-		"select id, name, iso3, phonecode, native
-			from country
-			order by name asc";
-
-		$res = $this->db->query($sql);
-
-		if($res[0]) return $res;
-		return false;
-	}
-
 }
