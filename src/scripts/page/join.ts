@@ -17,9 +17,15 @@ export default class JoinClass {
 		on: { title: 'I want' },
 		off: { title: 'No thanks' }
 	}
+	
+	eCountry: HTMLInputElement | null = null
+	eCountryResult: HTMLDivElement | null = null
 	countries = []
 
-	constructor() {
+	Api: string = ''
+
+	constructor(App: any) {
+		this.Api = App.api
 		this.getCountries()
 	}
 
@@ -34,11 +40,19 @@ export default class JoinClass {
 		this.eFormCountry = __('#form-country')
 		this.eSubmit = __('#form-submit')
 
+		this.eCountry = __('#form-country')
+		this.eCountryResult = __('#country-result')
+
 		this.eProjects?.forEach((a: any) => __e((e: any) => __toggleStatus(e, this.state), a))
-		this.observeCountry()
+	
+		__e(() => this.focusCountry(), this.eCountry, 'focus')
+		__e(() => this.searchCountry(), this.eCountry, 'keyup')
+		__e((e: any) => this.blurCountry(e), this.eCountry, 'blur')
+		__e((e: any) => this.blurCountryRes(e), this.eCountryResult, 'blur')
 		__e(()=>this.submit(), this.eSubmit)
 	}
 
+	// SUBMIT ------------------------------------------------------------------
 	async submit() {
 		__glass()
 		const data = this.validate()
@@ -60,7 +74,7 @@ export default class JoinClass {
 		}
 
 		try{
-			const f = await fetch('/a/submit', { method: 'POST', body: frm })
+			const f = await fetch(this.Api + '/a/submit', { method: 'POST', body: frm })
 			const j = await f.json()
 			if(j && j.error === false && j.data && j.data.error === false){
 				__glass(false)
@@ -145,13 +159,68 @@ export default class JoinClass {
 		}
 	}
 
+	// COUNTRY -----------------------------------------------------------------
+	focusCountry() {
+		this.eCountry.value = ''
+		this.eCountry.dataset.id = ''
+		__('.form-input:has(#form-phone) .divput div').innerHTML = 'code'
+	}
+	searchCountry() {
+		const t = this.eCountry?.value ?? ''
+		this.eCountryResult?.classList.add('on')
+		//@ts-ignore
+		this.eCountryResult.innerHTML = ''
+		//if(t.length < 4) return
+
+		let len = 4
+		this.countries.map((a: any) => {
+			if (len > 0 && a.name.toLowerCase().indexOf(t.toLowerCase()) > -1) {
+				len --
+				const l = __c('li', { 'data-id': a.id, 'data-phone': a.phonecode, 'data-name': a.name }, `<span>${a.name}</span><span>${a.native}</span>`)
+				__e((e:any) => this.selectCountry(e.currentTarget.dataset), l) 
+				this.eCountryResult?.append(l)
+			}
+		})
+
+		this.eCountryResult?.classList[this.eCountryResult?.innerHTML != '' ? 'add' : 'remove']('on')
+	}
+
+	async selectCountry(d:any) {
+		// @ts-ignore
+		this.eCountry.value = d.name
+		// @ts-ignore
+		this.eCountry.dataset.id = d.id
+
+		__('.form-input:has(#form-phone) .divput div').innerHTML = d.phone
+
+		console.log('Select Country', d, this.eCountryResult, this.eCountry)
+		this.eCountryResult?.classList.remove('on')
+		await __delay(2000)
+
+		// @ts-ignore
+		this.eCountryResult.innerHTML = ''
+	}
+
+	async blurCountry(e: any) {
+		if(!e.target.dataset.id) e.target.value = ''
+		__('.form-input:has(#form-phone) .divput div').innerHTML = 'code'
+
+		await __delay(400)
+		this.eCountryResult?.classList.remove('on')
+	}
+
+	blurCountryRes(e: any) {
+		this.eCountryResult?.classList.remove('on')
+	}
+
 	async getCountries(){
 		try{
-			const f = await fetch('/a/countries')
+			const f = await fetch(this.Api + '/a/countries')
 			const j = await f.json()
 		
 			if(j && j.error == false && j.data){
 				this.countries = j.data
+				console.log('Countries', this.countries[0])
 				return true
 			}
 		} catch(e){}
@@ -175,6 +244,7 @@ export default class JoinClass {
 		}
 	}
 
+	// PAGE CODE ---------------------------------------------------------------
 	pageCode(data: any) {
 		__('main .container').innerHTML = ''
 
@@ -204,7 +274,7 @@ export default class JoinClass {
 
 		__glass()
 		try{
-			const f = await fetch('/a/verify', {
+			const f = await fetch(this.Api + '/a/verify', {
 				method: 'POST',
 				body: frm
 			})
@@ -228,6 +298,7 @@ export default class JoinClass {
 		__report('Invalid code!<br>Try again...')
 	}
 
+	// PAGE LOGIN --------------------------------------------------------------
 	pageLogin(code:string){
 		__('main .container').innerHTML = ''
 
@@ -265,7 +336,7 @@ export default class JoinClass {
 
 		__glass()
 		try{
-			const f = await fetch('/login', {
+			const f = await fetch(this.Api + '/login', {
 				method: 'POST',
 				body: frm
 			})

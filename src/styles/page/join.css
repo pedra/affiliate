@@ -95,9 +95,54 @@
 	width: 100%;
 }
 
+.form-input {
+	position: relative;
+}
+
 .form-input input {
     text-shadow: 2px 2px 3px rgba(0,0,0,0.5);
 }
+
+.form-input.country .result {
+	position: absolute;
+	top: 4.5rem;
+	left: 0;
+	right: 0;
+	z-index: 200;
+	background: #fff;
+	box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+	list-style: none;
+	max-height: 180px;
+	overflow: auto;
+	
+	transition: 0.3s;
+	opacity: 0;
+	transform: rotateX(-90deg);
+	transform-origin: top;
+}
+
+.form-input.country .result.on {
+	opacity: 1;
+	transform: none;
+}
+
+.form-input.country .result li {
+	cursor: pointer;
+	padding: 0.3rem 0;
+	display: flex;
+	flex-direction: column;
+	padding: 0.2rem 1rem;
+	font-weight: 400;
+}
+.form-input.country .result span:first-child {
+	font-weight: 700;
+	color: var(--text);
+}
+
+.form-input.country .result li:hover {
+	background: #eee;
+}
+
 
 .control {
     margin: 2rem 0;

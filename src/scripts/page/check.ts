@@ -2,7 +2,11 @@ import { __, __e, __glass, __report } from "@scripts/utils"
 
 export default class JoinClass {
 
-	constructor() {}
+	Api: string = ''
+
+	constructor(App: any) {
+		this.Api = App.api
+	}
 
 	async init() {
 		__e(() => this.login(), __('.form button'))
@@ -26,7 +30,7 @@ export default class JoinClass {
 		
 		__glass()
 		try {
-			const f = await fetch('/login', {
+			const f = await fetch(this.Api + '/login', {
 				method: 'POST',
 				body: frm
 			})

@@ -12,12 +12,13 @@ const App = new class AppClass {
 		path: string,
 		view: any,
 	}[] = []
+	api: string = 'http://localhost'
 
 	constructor() {
-		this.pages.push({ name: 'Home', path: '/', view: new HomeClass() })
-		this.pages.push({ name: 'Profile', path: '/profile', view: new ProfileClass() })
-		this.pages.push({ name: 'Join', path: '/join', view: new JoinClass() })
-		this.pages.push({ name: 'Check', path: '/check', view: new CheckClass() })
+		this.pages.push({ name: 'Home', path: '/', view: new HomeClass(this) })
+		this.pages.push({ name: 'Profile', path: '/profile', view: new ProfileClass(this) })
+		this.pages.push({ name: 'Join', path: '/join', view: new JoinClass(this) })
+		this.pages.push({ name: 'Check', path: '/check', view: new CheckClass(this) })
 		this.router()
 	}
 
@@ -32,7 +33,7 @@ const App = new class AppClass {
 		this.page = this.pages[i].name
 		this.pages[i].view ? this.pages[i].view.init(this.path) : null
 
-		console.log(`App::router started!\nPath: ${this.path}\nPage: ${this.page}`)
+		//console.log(`App::router started!\nPath: ${this.path}\nPage: ${this.page}`)
 		// Service Worker install
 		//'serviceWorker' in navigator && navigator.serviceWorker.register('/sw.js')
 	}
@@ -41,7 +42,7 @@ const App = new class AppClass {
 export default App
 document.addEventListener("astro:page-load", () => {
 	App.router()
-	console.log('APP START ✨')
+	//console.log('APP START ✨')
 
 	// Service Worker install
 	//'serviceWorker' in navigator && navigator.serviceWorker.register('/sw.js')

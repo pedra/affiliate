@@ -131,23 +131,30 @@ import Layout from "../layouts/JoinLayout.astro";
 
           <div class="form-input">
             <label for="form-phone">Phone (numbers only)</label>
-            <input
-              type="number"
-              id="form-phone"
-              placeholder="Your phone number..."
-            />
+			<div class="divput">
+				<div>code</div>
+            	<input
+              		type="number"
+              		id="form-phone"
+              		placeholder="Your phone number..."
+            	/>
+			</div>
           </div>
 
-          <div class="form-input">
+          <div class="form-input country">
             <label for="form-country">Country</label>
             <input
               type="text"
               data-id=""
-              list="countries"
               id="form-country"
               placeholder="Your Country..."
               autocomplete="off"
             />
+			<div class="result" id="country-result">
+    			<li>United Estates</li>
+    			<li>Brazil</li>
+    			<li>Canada</li>
+			</div>
             <datalist id="countries"
               ><option value="Afghanistan">افغانستان</option><option
                 value="Aland Islands">Åland</option

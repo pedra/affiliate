@@ -24,12 +24,13 @@ export default class HomeClass {
 		"10.jpg"
 	]
 
-	constructor() {
+	Api: string = ''
+
+	constructor(App: any) {
+		this.Api = App.api
 		this.eContainer = __('#carousel')
 		this.eBtnSignin = __('#hom-signin')
 		this.eSignin = __('#signin')
-
-		console.log('HOME START ✨')
 	}
 
 	async init () {
@@ -94,7 +95,7 @@ export default class HomeClass {
 		frm.append('email', email)
 		frm.append('password', password)
 		
-		const f = await fetch('/login', {
+		const f = await fetch(this.Api + '/login', {
 			method: 'POST',
 			body: frm
 		})

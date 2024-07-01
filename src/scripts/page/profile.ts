@@ -9,7 +9,10 @@ export default class ProfileClass {
 		off: { title: 'Disapproved', msg: 'Do you want to DISAPPROVE this affiliate?'}
 	}
 
-	constructor() {
+	Api: string = ''
+
+	constructor(App: any) {
+		this.Api = App.api
 		this.eControls = __('.control span', true)
 	}
 
