@@ -45,23 +45,6 @@ class Join {
 		exit;
 	}
 
-	public function searchCountry($params, $queries)
-	{
-		if(!$params[0]) return false;
-		$query = $params[0];
-
-		$sql =
-		"select id, name, iso3, phonecode, native
-			from country
-			where name like concat('%', :q, '%')
-			or native  like concat('%', :q, '%')";
-
-		$res = $this->db->query($sql, [":q" => $query]);
-		
-		if($res[0]) return $res[0];
-		return false;
-	}
-
 	public function countries () {
 		$sql =
 		"select id, name, iso3, phonecode, native

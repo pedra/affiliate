@@ -26,7 +26,6 @@ if ($_SERVER['HTTP_HOST'] == 'fd2e.com') {
 
 
 	// APIs
-	->get('/a/country/(.*)', '\Module\Page\Join', 'searchCountry')
 	->get('/a/countries', '\Module\Page\Join', 'countries')
 
 	// Add affiliate

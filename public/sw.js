@@ -31,7 +31,14 @@ const ASSETS=[
 	"/font/mso.woff2",
 	"/font/Montserrat.woff2",
 
-	"/js/script.js"
+	"/css/check.css",
+	"/css/index.css",
+	"/css/profile.css",
+
+	"/js/hoisted.js",
+	"/js/hoisted2.js",
+	"/js/hoisted3.js",
+	"/a/countries"	
 ];
 
 /*
