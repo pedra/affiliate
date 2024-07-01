@@ -56,11 +56,9 @@ export default class JoinClass {
 	async submit() {
 		__glass()
 		const data = this.validate()
-		console.log('Submit Validade', data )
 		if (data === false) return __glass(false)
 
 		this.eProjects?.forEach((a: any) => { if(a.dataset.status == '1') data.projects.push(a.dataset.name) })
-		console.log('Data in Submit', data)
 		data.projects = data.projects.join(',')
 		
 		if (data.projects.length == 0 || data.projects.indexOf('around') == -1) {
@@ -165,16 +163,17 @@ export default class JoinClass {
 		this.eCountry.dataset.id = ''
 		__('.form-input:has(#form-phone) .divput div').innerHTML = 'code'
 	}
+
 	searchCountry() {
 		const t = this.eCountry?.value ?? ''
 		this.eCountryResult?.classList.add('on')
-		//@ts-ignore
 		this.eCountryResult.innerHTML = ''
-		//if(t.length < 4) return
 
 		let len = 4
 		this.countries.map((a: any) => {
-			if (len > 0 && a.name.toLowerCase().indexOf(t.toLowerCase()) > -1) {
+			if (len > 0 && 
+				(a.name.toLowerCase().indexOf(t.toLowerCase()) > -1 ||
+				a.native.toLowerCase().indexOf(t.toLowerCase()) > -1)) {
 				len --
 				const l = __c('li', { 'data-id': a.id, 'data-phone': a.phonecode, 'data-name': a.name }, `<span>${a.name}</span><span>${a.native}</span>`)
 				__e((e:any) => this.selectCountry(e.currentTarget.dataset), l) 
@@ -186,18 +185,14 @@ export default class JoinClass {
 	}
 
 	async selectCountry(d:any) {
-		// @ts-ignore
 		this.eCountry.value = d.name
-		// @ts-ignore
 		this.eCountry.dataset.id = d.id
 
 		__('.form-input:has(#form-phone) .divput div').innerHTML = d.phone
 
-		console.log('Select Country', d, this.eCountryResult, this.eCountry)
 		this.eCountryResult?.classList.remove('on')
 		await __delay(2000)
 
-		// @ts-ignore
 		this.eCountryResult.innerHTML = ''
 	}
 
@@ -220,28 +215,10 @@ export default class JoinClass {
 		
 			if(j && j.error == false && j.data){
 				this.countries = j.data
-				console.log('Countries', this.countries[0])
 				return true
 			}
 		} catch(e){}
 		return false
-	}
-
-	async observeCountry() {
-		__('#form-country').onchange = (e: any) => {
-			let c = e.currentTarget
-			let t = false
-			this.countries.map((a: any) => {
-				if (a.name == c.value) {
-					c.dataset.id = a.id
-					t = true
-				}
-			})
-			if (!t) {
-				c.value = ""
-				c.dataset.id = ""
-			}
-		}
 	}
 
 	// PAGE CODE ---------------------------------------------------------------
