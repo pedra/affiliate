@@ -48,7 +48,7 @@ export default class JoinClass {
 		__e(() => this.focusCountry(), this.eCountry, 'focus')
 		__e(() => this.searchCountry(), this.eCountry, 'keyup')
 		__e((e: any) => this.blurCountry(e), this.eCountry, 'blur')
-		__e((e: any) => this.blurCountryRes(e), this.eCountryResult, 'blur')
+		__e(() => this.blurCountryRes(), this.eCountryResult, 'blur')
 		__e(()=>this.submit(), this.eSubmit)
 	}
 
@@ -159,7 +159,9 @@ export default class JoinClass {
 
 	// COUNTRY -----------------------------------------------------------------
 	focusCountry() {
+		// @ts-ignore
 		this.eCountry.value = ''
+		// @ts-ignore
 		this.eCountry.dataset.id = ''
 		__('.form-input:has(#form-phone) .divput div').innerHTML = 'code'
 	}
@@ -167,6 +169,7 @@ export default class JoinClass {
 	searchCountry() {
 		const t = this.eCountry?.value ?? ''
 		this.eCountryResult?.classList.add('on')
+		// @ts-ignore
 		this.eCountryResult.innerHTML = ''
 
 		let len = 4
@@ -185,14 +188,16 @@ export default class JoinClass {
 	}
 
 	async selectCountry(d:any) {
+		// @ts-ignore
 		this.eCountry.value = d.name
+		// @ts-ignore
 		this.eCountry.dataset.id = d.id
 
 		__('.form-input:has(#form-phone) .divput div').innerHTML = d.phone
 
 		this.eCountryResult?.classList.remove('on')
 		await __delay(2000)
-
+		// @ts-ignore
 		this.eCountryResult.innerHTML = ''
 	}
 
@@ -204,7 +209,7 @@ export default class JoinClass {
 		this.eCountryResult?.classList.remove('on')
 	}
 
-	blurCountryRes(e: any) {
+	blurCountryRes() {
 		this.eCountryResult?.classList.remove('on')
 	}
 
