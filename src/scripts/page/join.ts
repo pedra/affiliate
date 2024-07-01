@@ -174,13 +174,18 @@ export default class JoinClass {
 
 		let len = 4
 		this.countries.map((a: any) => {
-			if (len > 0 && 
-				(a.name.toLowerCase().indexOf(t.toLowerCase()) > -1 ||
-				a.native.toLowerCase().indexOf(t.toLowerCase()) > -1)) {
-				len --
-				const l = __c('li', { 'data-id': a.id, 'data-phone': a.phonecode, 'data-name': a.name }, `<span>${a.name}</span><span>${a.native}</span>`)
-				__e((e:any) => this.selectCountry(e.currentTarget.dataset), l) 
-				this.eCountryResult?.append(l)
+			if(len > 0) { 
+			const na = a.name.toLowerCase() ?? a.name
+			let nat = a.native || ''
+			try{nat = a.native.toLowerCase()} catch(e){}
+
+				if (na.indexOf(t.toLowerCase()) > -1 ||
+					nat.indexOf(t.toLowerCase()) > -1) {
+					len --
+					const l = __c('li', { 'data-id': a.id, 'data-phone': a.phonecode, 'data-name': a.name }, `<span>${a.name}</span><span>${a.native}</span>`)
+					__e((e:any) => this.selectCountry(e.currentTarget.dataset), l) 
+					this.eCountryResult?.append(l)
+				}
 			}
 		})
 
